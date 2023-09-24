@@ -1,7 +1,7 @@
 import { AsyncData, UseFetchOptions, navigateTo } from "#app";
 import { useFetch } from "#imports";
 import { useContently } from "./composable";
-import { RouterName } from "./const";
+import { RouterName, API_BASE_URL } from "./const";
 
 export const useApiFetch = <T>(
   url: string,
@@ -11,7 +11,7 @@ export const useApiFetch = <T>(
 
   const http = useFetch(url, {
     ...options,
-    baseURL: "/__api/",
+    baseURL: API_BASE_URL,
     watch: false,
     onResponseError(ctx) {
       if (ctx.response.status === 401) {

@@ -10,15 +10,15 @@ export default defineNuxtRouteMiddleware(async (to, _) => {
   if (hasAdminUrl) {
     await api.init();
 
-    if (!isAuth.value && to.name !== "admin-login") {
+    if (!isAuth.value && to.name !== RouterName.LOGIN) {
       return navigateTo({
         name: RouterName.LOGIN,
       });
     }
 
-    if (isAuth.value && to.name == "admin-login") {
+    if (isAuth.value && to.name == RouterName.LOGIN) {
       return navigateTo({
-        name: RouterName.HOME,
+        name: RouterName.INDEX,
       });
     }
   }

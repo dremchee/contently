@@ -7,6 +7,7 @@ import { withQuery } from "ufo";
 
 import { User, Collections, DocumentType, Settings } from "../api/types";
 import { config } from "../api/const";
+import { API_BASE_URL } from "../plugins/const";
 
 export const useContently = () => {
   const breakpoint = useBreakpoints({
@@ -43,7 +44,7 @@ export const useContently = () => {
     id: string,
     options?: { width?: number; height?: number; quality?: number }
   ) => {
-    const url = withQuery(`/__api/assets/${id}`, options || {});
+    const url = withQuery(`${API_BASE_URL}assets/${id}`, options || {});
 
     return url;
   };

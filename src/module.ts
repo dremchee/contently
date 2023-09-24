@@ -13,24 +13,23 @@ import {
   extendPages,
   extendRouteRules,
   installModule,
-  addTemplate,
 } from "@nuxt/kit";
 
 import { writeFileSync } from "node:fs";
 import { ModuleOptionsEnum, LangType } from "./runtime/api/types";
-import { RouterName } from "./runtime/plugins/const";
+import { RouterName, API_BASE_URL } from "./runtime/plugins/const";
 
 export const { resolve } = createResolver(import.meta.url);
 
 const routes: NuxtPage[] = [
   {
     name: RouterName.LOGIN,
-    path: "/admin/login",
+    path: `/${API_BASE_URL}/login`,
     file: resolve("./runtime/public/pages/LoginPage.vue"),
   },
   {
     name: RouterName.INDEX,
-    path: "/admin",
+    path: `/${API_BASE_URL}`,
     file: resolve("./runtime/public/pages/IndexPage.vue"),
     redirect: {
       name: RouterName.CONTENT,

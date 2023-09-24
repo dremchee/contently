@@ -1,6 +1,6 @@
 import { defineNuxtPlugin } from "#imports";
 import { useApiFetch } from "./http";
-import { useContently, useNuxtData } from "#imports";
+import { useContently } from "#imports";
 
 import {
   Settings,
@@ -10,16 +10,18 @@ import {
   Collection,
   File,
   Files,
+  LangType,
 } from "../api/types";
 
 export class ContentlyApi {
   async init() {
-    const { isAuth, user, settings, collections, locale } = useContently();
+    const { isAuth, user, settings, collections } = useContently();
     if (!isAuth.value) {
       const auth = await this.auth();
 
       if (auth?.data) {
         user.value = auth?.data;
+        isAuth.value = true;
       }
     }
 
@@ -33,7 +35,7 @@ export class ContentlyApi {
       useContently().settings.value = data.value?.data;
 
       if (data.value.data.meta.locale) {
-        useContently().locale.value = data.value.data.meta.locale;
+        useContently().locale.value = data.value.data.meta.locale as LangType;
       }
     }
     return data.value;
@@ -52,10 +54,10 @@ export class ContentlyApi {
   async auth() {
     const { data } = await useApiFetch<DocumentType<User>>("auth");
 
-    if (data.value?.data) {
-      useContently().isAuth.value = true;
-      useContently().user.value = data.value?.data;
-    }
+    // if (data.value?.data) {
+    //   useContently().isAuth.value = true;
+    //   useContently().user.value = data.value?.data;
+    // }
 
     return data.value;
   }
