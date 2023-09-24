@@ -1,4 +1,24 @@
 
+## v0.0.3
+
+[compare changes](https://github.com/dremchee/nuxt-contently/compare/v0.0.2...v0.0.3)
+
+### 🚀 Enhancements
+
+- Add confirm action remove files ([ce77ba5](https://github.com/dremchee/nuxt-contently/commit/ce77ba5))
+
+### 🩹 Fixes
+
+- Logout & login error ([08b1d45](https://github.com/dremchee/nuxt-contently/commit/08b1d45))
+
+### 🏡 Chore
+
+- Refine style ([cdafa35](https://github.com/dremchee/nuxt-contently/commit/cdafa35))
+
+### ❤️ Contributors
+
+- Dremchee ([@dremchee](http://github.com/dremchee))
+
 ## v0.0.2
 
 [compare changes](https://github.com/dremchee/nuxt-contently/compare/v0.0.1...v0.0.2)
