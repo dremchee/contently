@@ -2,10 +2,9 @@
   import { computed, ref, useContently, watch } from '#imports';
   import { DocumentType, Files, File } from '#contently/api/types'
   import ModalWindow from '#contently/public/core/modal/ModalWindow.vue';
-  import PreviewFileControl from '#contently/public/core/PreviewFileControl.vue';
   import DashboardFileCard from './DashboardFileCard.vue';
 
-  const { api, previewUrl } = useContently()
+  const { api, t } = useContently()
 
   const props = defineProps<{
     modelValue: boolean;
@@ -21,7 +20,7 @@
     const response = await api.getFiles({ type: 'image' })
 
     if(response?.data) {
-      files.value = response.data
+      files.value = response.data.value.data
     }
   }
 
@@ -29,8 +28,6 @@
     input.value = false
     emit('select', file)
   }
-
-  const isSelected = ref(false)
 
   const input = computed({
     get() {
@@ -52,7 +49,7 @@
 <template>
   <ModalWindow
     v-model="input"
-    title="Choose file"
+    :title="t('chooseFile')"
     direction="sidebar"
     size="large"
   >

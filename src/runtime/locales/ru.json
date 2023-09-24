@@ -1,7 +1,11 @@
 {
   "example": "Пример",
   "controlPanel": "Панель управления",
+  "email": "Электронная почта",
+  "password": "Пароль",
   "main": "Главная",
+  "login": "Логин",
+  "version": "Версия",
   "collection": "Коллекция",
   "collections": "Коллекции",
   "newCollection": "Новая коллекция",
@@ -56,5 +60,8 @@
   "primaryKey": "Первичный ключ",
   "advancedSettings": "Дополнительные кастройки",
   "keyMuxstBeUnique": "Ключ должен быть уникальным (Латинскими символами)",
-  "cannotChangeItsType": "После создания коллекции, нельзя изменить её тип"
+  "cannotChangeItsType": "После создания коллекции, нельзя изменить её тип",
+  "chooseFile": "Выберите файл",
+  "uploadFile": "Загрузить файл",
+  "uploadFiles": "Загрузить файлы"
 }

@@ -4,7 +4,7 @@
   import { navigateTo, ref, useContently } from '#imports';
   import InputField from '../core/InputField.vue';
   import ButtonControl from '../core/ButtonControl.vue';
-  const { api } = useContently();
+  const { api, t } = useContently();
   import { version } from '../../../../package.json'
 
   const form = ref({
@@ -27,20 +27,24 @@
   <div class="dashboard-login">
     <div class="dashboard-login__container">
       <div class="dashboard-login__title">
-        Панель управления
+        {{ t('controlPanel') }}
       </div>
       <div class="dashboard-login__form">
-        <InputField v-model="form.email" />
+        <InputField
+          v-model="form.email"
+          :placeholder="t('email')"
+        />
         <InputField
           v-model="form.password"
           type="password"
+          :placeholder="t('password')"
         />
         <ButtonControl @click="login">
-          Войти
+          {{ t('login') }}
         </ButtonControl>
       </div>
       <div class="dashboard-login__note">
-        Версия {{ version }}
+        {{ t('version') }}: {{ version }}
       </div>
     </div>
   </div>

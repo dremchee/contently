@@ -17,8 +17,8 @@
     }
   })))
 
-  watch(router.currentRoute, (e) => {
-    if(e.name === RouterName.CONTENT_ID) {
+  watch(router.currentRoute, (page) => {
+    if(page.name === RouterName.CONTENT_ID) {
       redirectTo()
     }
   })

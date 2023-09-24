@@ -33,7 +33,7 @@ Module for creating and editing content.
 
 ## Quick Setup
 
-1. Add `nuxt-contently` dependency to your project
+1. Add `nuxt-contently` dependency to your Nuxt project
 
 ```bash
 # Using pnpm
@@ -54,7 +54,7 @@ export default defineNuxtConfig({
 });
 ```
 
-That's it! You can now use My Module in your Nuxt app ✨
+That's it! You can now use Contently in your Nuxt app ✨
 
 <!-- Badges -->
 

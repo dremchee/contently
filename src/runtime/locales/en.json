@@ -1,7 +1,11 @@
 {
   "example": "Example",
   "controlPanel": "Control panel",
+  "email": "E-Mail",
+  "password": "Password",
   "main": "Main",
+  "login": "Login",
+  "version": "Version",
   "collection": "Collection",
   "collections": "Collections",
   "newCollection": "New colelction",
@@ -56,5 +60,8 @@
   "primaryKey": "Primary key",
   "advancedSettings": "Advanced settings",
   "keyMuxstBeUnique": "The key must be unique (in Latin characters)",
-  "cannotChangeItsType": "After creating a collection, you cannot change its type"
+  "cannotChangeItsType": "After creating a collection, you cannot change its type",
+  "chooseFile": "Choose file",
+  "uploadFile": "Upload file",
+  "uploadFiles": "Upload files"
 }
