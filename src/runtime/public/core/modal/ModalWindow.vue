@@ -113,6 +113,9 @@
       border-radius: 0;
     }
 
+    &.is-small {
+      max-width: 400px;
+    }
     &.is-large {
       max-width: 850px;
     }

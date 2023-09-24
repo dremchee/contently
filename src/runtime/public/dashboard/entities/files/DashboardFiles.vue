@@ -19,6 +19,7 @@
   const isPending = ref(false)
   const isLoading = ref(false)
   const currentPage = ref(1)
+  const isRemoved = ref(false)
 
   const paginate = ref({
     limit: 20,
@@ -31,7 +32,6 @@
     if(data.value?.data) {
       files.value = data.value?.data
     }
-
   }
 
   const inputFile = ref<HTMLInputElement | null>(null)
@@ -109,7 +109,7 @@
 
   const removeFiles = async () => {
     isPending.value = true
-    const promises = Object.keys(checkedFiles.value).map((id) => {
+    const promises = Object.keys(checkedFiles.value).filter(key => checkedFiles.value[key]).map((id) => {
       delete checkedFiles.value[id]
       return api.removeFile(id)
     })
@@ -119,6 +119,7 @@
     await fetchFiles()
 
     isPending.value = false
+    isRemoved.value = false
 
     removed.forEach((e) => {
       toastShow({
@@ -126,7 +127,6 @@
         type: 'warning'
       })
     })
-
   }
 
   const cancelCheckedFiles = () => {
@@ -172,7 +172,7 @@
               size="small"
               icon="trash"
               variant="link-error"
-              @click="removeFiles"
+              @click="isRemoved = true"
             >
               {{ t('remove') }} {{ checkedFileList }}
             </ButtonControl>
@@ -233,6 +233,31 @@
         @remove="removedFile"
       />
     </ModalWindow>
+
+    <ModalWindow
+      v-model="isRemoved"
+      size="small"
+      title="Remove files?"
+    >
+      <div :class="$style['actions']">
+        <ButtonControl
+          icon="close"
+          variant="secondary"
+          block
+          @click="isRemoved = false"
+        >
+          {{ t('cancel') }}
+        </ButtonControl>
+        <ButtonControl
+          icon="check"
+          variant="error"
+          block
+          @click="removeFiles"
+        >
+          {{ t('remove') }}
+        </ButtonControl>
+      </div>
+    </ModalWindow>
   </DashboardMainWrapper>
 </template>
 
@@ -251,5 +276,11 @@
     &.is-uploading {
       opacity: .2;
     }
+  }
+
+  .actions {
+    display: flex;
+    gap: 16px;
+    width: 100%;
   }
 </style>
