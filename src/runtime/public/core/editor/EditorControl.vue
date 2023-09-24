@@ -260,7 +260,7 @@
   }
 
   .area {
-    box-shadow: var(--box-shadow-control);
+    box-shadow: var(--box-shadow-control-small);
     background-color: var(--color-white);
     border-radius: var(--border-radius);
     border: 1px solid var(--color-border-light);

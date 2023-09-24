@@ -3,6 +3,7 @@
   import { useDraggable } from '@vueuse/core';
   import IconControl from '../../core/IconControl.vue';
   import TooltipControl from '#contently/public/core/TooltipControl.vue';
+  import DropdownControl from '#contently/public/core/DropdownControl.vue';
   import { RouterName } from '../../../plugins/const';
 
   const { t, breakpoint } = useContently();
@@ -64,15 +65,18 @@
       />
     </div>
     <div :class="$style['list']">
-      <a
-        href="/"
-        :class="$style['item']"
-        target="_blank"
-      >
-        <span :class="$style['icon']">
-          <IconControl name="eye" />
-        </span>
-      </a>
+      <div :class="$style['item']">
+        <a
+          href="/"
+          :class="$style['link']"
+          target="_blank"
+        >
+          <span :class="$style['icon']">
+            <IconControl name="eye" />
+          </span>
+        </a>
+      </div>
+
       <NuxtLink
         v-for="item in items"
         :key="item.id"
@@ -80,33 +84,42 @@
         :to="item.route"
         custom
       >
-        <a
-          :href="href"
-          :class="[
-            $style['item'],
-            isActive && $style['is-active']
-          ]"
-          @click.prevent="navigate()"
-        >
-          <TooltipControl
-            :text="String(item.title)"
-            placement="right"
-            :timeout="1000"
+        <div :class="$style['item']">
+          <a
+            :href="href"
+            :class="[
+              $style['link'],
+              isActive && $style['is-active']
+            ]"
+            @click.prevent="navigate()"
           >
-            <span :class="$style['icon']">
-              <IconControl :name="item.icon" />
-            </span>
-          </TooltipControl>
-        </a>
+            <TooltipControl
+              :text="String(item.title)"
+              placement="right"
+              :timeout="1000"
+            >
+              <span :class="$style['icon']">
+                <IconControl :name="item.icon" />
+              </span>
+            </TooltipControl>
+          </a>
+        </div>
       </NuxtLink>
-      <a
+
+      <div
         :class="[
           $style['item'],
           $style['is-last'],
         ]"
       >
-        <IconControl name="user" />
-      </a>
+        <a
+          href=""
+          :class="$style['link']"
+          @click.prevent
+        >
+          <IconControl name="user" />
+        </a>
+      </div>
     </div>
   </div>
 </template>
@@ -146,17 +159,6 @@
   }
 
   .item {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 60px;
-    color: var(--color-default);
-    transition: .2s;
-
-    &.is-active {
-      background-color: var(--color-white);
-    }
 
     &.is-last {
       margin-top: auto;
@@ -166,6 +168,19 @@
       width: 100%;
     }
 
+  }
+
+  .link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 60px;
+    color: var(--color-default);
+    transition: .2s;
+    &.is-active {
+      background-color: var(--color-white);
+    }
   }
 
 
