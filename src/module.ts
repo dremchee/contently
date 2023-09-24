@@ -17,19 +17,19 @@ import {
 
 import { writeFileSync } from "node:fs";
 import { ModuleOptionsEnum, LangType } from "./runtime/api/types";
-import { RouterName, API_BASE_URL } from "./runtime/plugins/const";
+import { RouterName, PUBLIC_BASE_URL } from "./runtime/plugins/const";
 
 export const { resolve } = createResolver(import.meta.url);
 
 const routes: NuxtPage[] = [
   {
     name: RouterName.LOGIN,
-    path: `/${API_BASE_URL}/login`,
+    path: `/${PUBLIC_BASE_URL}/login`,
     file: resolve("./runtime/public/pages/LoginPage.vue"),
   },
   {
     name: RouterName.INDEX,
-    path: `/${API_BASE_URL}`,
+    path: `/${PUBLIC_BASE_URL}`,
     file: resolve("./runtime/public/pages/IndexPage.vue"),
     redirect: {
       name: RouterName.CONTENT,
