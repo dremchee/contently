@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-  import { useRoute, useRouter } from '#app';
-  import { ref, computed, useContently, onMounted } from '#imports';
+  import { ref, computed, useContently } from '#imports';
   import { useDraggable } from '@vueuse/core';
   import IconControl from '../../core/IconControl.vue';
+  import TooltipControl from '#contently/public/core/TooltipControl.vue';
   import { RouterName } from '../../../plugins/const';
 
-  const { t, collections } = useContently();
+  const { t, breakpoint } = useContently();
 
   const drag = ref<HTMLDivElement | null>(null);
   const isDragMenu = ref(false);
@@ -20,18 +20,12 @@
     },
   });
 
-  const styleMenu = computed(() => ({
-    width: `${x.value - 60}px`,
-  }));
-
-  const currentRoute = useRoute();
-  const router = useRouter();
-
   const items = computed(() => [
     {
       id: 'content',
       name: 'main',
       icon: 'home',
+      title: t('main'),
       route: {
         name: RouterName.CONTENT,
       },
@@ -39,6 +33,7 @@
     {
       id: 'files',
       name: 'files',
+      title: t('files'),
       icon: 'folder',
       route: {
         name: RouterName.FILES,
@@ -48,33 +43,21 @@
     {
       id: 'settings',
       name: 'settings',
+      title: t('settings'),
       icon: 'settings',
       route: {
         name: RouterName.SETTINGS,
       },
     },
   ]);
-
-  // const currentItem = computed(
-  //   () =>
-  //     items.value.find(e => e.id === router.currentRoute.value.meta?.parent)?.children ||
-  //     []
-  // );
-
-  // const routeToPage = async (item: typeof items.value[number], navigate?: any) => {
-  //   const [first] = item.children;
-
-  //   if (first) {
-  //     return router.push(first.route);
-  //   }
-
-  //   return navigate();
-  // };
 </script>
 
 <template>
-  <div :class="$style['navigation']">
-    <div :class="$style['logo']">
+  <div :class="[$style['navigation'], !breakpoint.phablet.value && $style['is-compact']]">
+    <div
+      v-if="breakpoint.phablet.value"
+      :class="$style['logo']"
+    >
       <IconControl
         name="copy"
         :size="32"
@@ -101,17 +84,29 @@
           :href="href"
           :class="[
             $style['item'],
-            isActive && $style['is-active']]"
+            isActive && $style['is-active']
+          ]"
           @click.prevent="navigate()"
         >
-          <span :class="$style['icon']">
-            <IconControl :name="item.icon" />
-          </span>
+          <TooltipControl
+            :text="String(item.title)"
+            placement="right"
+            :timeout="1000"
+          >
+            <span :class="$style['icon']">
+              <IconControl :name="item.icon" />
+            </span>
+          </TooltipControl>
         </a>
       </NuxtLink>
-    </div>
-    <div :class="$style['user']">
-      <IconControl name="user" />
+      <a
+        :class="[
+          $style['item'],
+          $style['is-last'],
+        ]"
+      >
+        <IconControl name="user" />
+      </a>
     </div>
   </div>
 </template>
@@ -123,21 +118,31 @@
     min-width: 60px;
     height: 100%;
     background-color: var(--color-border-light);
+
+    &.is-compact {
+      flex-direction: row;
+      min-width: 100%;
+    }
   }
 
   .logo {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
+    min-width: 60px;
     height: 60px;
     background-color: var(--color-brand);
     color: var(--color-white);
   }
   .list {
     width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
+
+    .is-compact & {
+      flex-direction: row;
+    }
   }
 
   .item {
@@ -152,7 +157,17 @@
     &.is-active {
       background-color: var(--color-white);
     }
+
+    &.is-last {
+      margin-top: auto;
+    }
+
+    .is-compact & {
+      width: 100%;
+    }
+
   }
+
 
   .user {
     display: flex;

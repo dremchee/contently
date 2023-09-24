@@ -1,23 +1,27 @@
 <script lang="ts" setup>
-  import { onMounted, ref, nextTick } from '#imports';
+  import { onMounted, ref, nextTick, watch } from '#imports';
+  import { useElementHover } from '@vueuse/core'
   import { computePosition, shift, offset as floatingOffset, autoUpdate, Placement } from '@floating-ui/dom';
-  import { CSSProperties } from 'nuxt/dist/app/compat/capi';
+  import type { CSSProperties } from 'nuxt/dist/app/compat/capi';
 
   const props = withDefaults(defineProps<{
     text: string;
     placement?: Placement,
     offset: number
-    width: 'reference' | 'floating' | number
+    width: 'reference' | 'floating' | number;
+    timeout?: number
   }>(), {
     placement: 'top',
     offset: 8,
-    width: 'reference'
+    width: 'reference',
+    timeout: 200
   })
 
   const isShow = ref(false);
 
   const trigger = ref<HTMLDivElement | null>(null);
   const tooltip = ref<HTMLDivElement | null>(null);
+  const isHovered = useElementHover(trigger, { delayEnter: props.timeout })
 
   const styleDropdown = ref<CSSProperties>({
     position: 'relative',
@@ -26,7 +30,6 @@
   });
 
   const middleware = [
-    shift({ padding: 5 }),
     floatingOffset(props.offset),
   ];
 
@@ -46,14 +49,12 @@
     }
   };
 
-  const showTooltip = () => {
-    updatePosition()
-    isShow.value = true
-  }
-
-  const hideTooltip = () => {
-    isShow.value = false
-  }
+  watch(isHovered, (value) => {
+    if(value) {
+      updatePosition()
+    }
+    isShow.value = value
+  })
 
   onMounted(async () => {
     await nextTick();
@@ -67,8 +68,6 @@
   <div
     ref="trigger"
     class="tooltip-control"
-    @mouseenter="showTooltip"
-    @mouseleave="hideTooltip"
   >
     <slot />
     <Transition
@@ -80,7 +79,6 @@
         class="tooltip-control__tooltip"
         :style="styleDropdown"
       >
-        <!-- <slot name="tooltip" /> -->
         {{ text }}
       </div>
     </Transition>

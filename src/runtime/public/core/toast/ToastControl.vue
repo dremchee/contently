@@ -1,7 +1,8 @@
 <script lang="ts" setup>
-  import { computed } from '#imports';
+  import { computed, useContently, useCssModule } from '#imports';
   import IconControl from '../IconControl.vue';
   import type { ToastTypes } from '.'
+  const { breakpoint } = useContently()
 
   const props = withDefaults(defineProps<{
     text: string;
@@ -12,8 +13,11 @@
 
   const emit = defineEmits(['close'])
 
+  const style = useCssModule()
+
   const classList = computed(() => [
-    props.type && `is-${props.type}`
+    props.type && style[`is-${props.type}`],
+    !breakpoint.tablet.value && style['is-compact']
   ])
 
   const icons = {
@@ -26,20 +30,19 @@
 
 <template>
   <div
-    class="toast-control"
-    :class="classList"
+    :class="[$style['toast'], classList]"
   >
-    <div class="toast-control__inner">
-      <div class="toast-control__icon">
+    <div :class="$style['inner']">
+      <div :class="$style['icon']">
         <IconControl :name="icons[type]" />
       </div>
       <div
-        class="toast-control__text"
+        :class="$style['text']"
       >
         <span v-html="text" />
       </div>
       <div
-        class="toast-control__close"
+        :class="$style['close']"
         @click="emit('close')"
       >
         <IconControl
@@ -51,8 +54,8 @@
   </div>
 </template>
 
-<style scoped>
-  .toast-control {
+<style module>
+  .toast {
     background-color: var(--color-white);
     box-shadow: var(--box-shadow);
     align-self: flex-end;
@@ -61,15 +64,6 @@
     color: var(--color-brand);
     overflow: hidden;
     position: relative;
-
-    &::before {
-      content: '';
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      opacity: .2;
-      z-index: 1;
-    }
 
     &.is-success {
       color: var(--color-white);
@@ -86,6 +80,10 @@
       background-color: var(--color-warning);
     }
 
+    &.is-compact {
+      width: 100%;
+    }
+
     &:hover {
       .toast-control__close {
         opacity: 0.6;
@@ -93,7 +91,7 @@
     }
   }
 
-  .toast-control__inner {
+  .inner {
     display: flex;
     gap: 8px;
     padding: 8px 16px;
@@ -101,16 +99,16 @@
     z-index: 1;
   }
 
-  .toast-control__icon {
+  .icon {
     margin-left: -8px;
   }
 
-  .toast-control__text {
+  .text {
     display: flex;
     align-items: center;
   }
 
-  .toast-control__close {
+  .close {
     display: flex;
     width: 24px;
     height: 24px;
@@ -123,7 +121,12 @@
     transition: 0.2s;
     border-radius: var(--border-radius);
     color: currentColor;
-    opacity: 0;
+    opacity: 0.2;
+    margin-left: auto;
+
+    .is-compact & {
+      opacity: 0.6;
+    }
 
     &:hover {
       opacity: 1;

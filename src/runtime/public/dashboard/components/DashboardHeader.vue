@@ -1,10 +1,20 @@
 <script lang="ts" setup>
+  import { useContently } from '#imports'
+  import IconControl from '#contently/public/core/IconControl.vue';
 
+  const { breakpoint, isShowSidebar } = useContently()
 </script>
 
 <template>
   <div :class="$style['header']">
     <div :class="$style['container']">
+      <div
+        v-if="!breakpoint.laptop.value"
+        :class="$style['bar']"
+        @click="isShowSidebar = true"
+      >
+        <IconControl name="bar" />
+      </div>
       <div :class="$style['title']">
         <slot name="title" />
       </div>
@@ -28,6 +38,13 @@
   .container {
     display: flex;
     gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .bar {
+    display: flex;
+    align-items: center;
+    margin-right: 16px;
   }
 
   .title {

@@ -13,7 +13,7 @@
     }[]
   }>()
 
-  const { settings, storage } = useContently()
+  const { settings, storage, breakpoint, isShowSidebar } = useContently()
 
   const handler = ref<HTMLDivElement | null>(null);
   const isDragging = ref(false);
@@ -32,21 +32,30 @@
   const styleMenu = computed(() => ({
     width: `${x.value - 60}px`,
   }));
+
+  const routeTo = (navigate: any) => {
+    isShowSidebar.value = false
+    navigate()
+  }
 </script>
 
 <template>
   <div
-    :class="$style['sidebar']"
+    :class="[$style['sidebar'], !breakpoint.laptop.value && $style['is-compact']]"
     :style="styleMenu"
   >
-    <div
-      ref="handler"
-      :class="[$style['handler'], isDragging && $style['is-dragging']]"
-    />
+    <template v-if="breakpoint.laptop.value">
+      <div
+        ref="handler"
+        :class="[$style['handler'], isDragging && $style['is-dragging']]"
+      />
 
-    <div :class="$style['title']">
-      {{ settings.meta.title }}
-    </div>
+      <div
+        :class="$style['title']"
+      >
+        {{ settings.meta.title }}
+      </div>
+    </template>
 
     <div :class="$style['links']">
       <NuxtLink
@@ -59,7 +68,7 @@
         <a
           :href="href"
           :class="[$style['link'], isActive && $style['is-active']]"
-          @click="navigate"
+          @click.prevent="routeTo(navigate)"
         >
           {{ item.name }}
         </a>
@@ -77,6 +86,12 @@
     min-width: 200px;
     max-width: 50vw;
     border-right: 1px solid var(--color-border-light);
+
+    &.is-compact {
+      border-right: none;
+      max-width: 100%;
+      width: 100% !important;
+    }
   }
 
   .handler {
@@ -109,6 +124,10 @@
     flex-direction: column;
     gap: 8px;
     padding: 8px;
+
+    .is-compact & {
+      padding: 0;
+    }
   }
 
   .link {

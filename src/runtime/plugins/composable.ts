@@ -1,32 +1,38 @@
+import { useBreakpoints } from "@vueuse/core";
 import { computed, useState, useLocalStorage } from "#imports";
 import { LangType } from "../api/types";
 import { ContentlyApi } from "./api";
 import { translations, LangMessage } from "../locales";
 import { withQuery } from "ufo";
 
-import {
-  User,
-  LangTypeValue,
-  Collections,
-  DocumentType,
-  Settings,
-} from "../api/types";
+import { User, Collections, DocumentType, Settings } from "../api/types";
 import { config } from "../api/const";
 
 export const useContently = () => {
-  const storage = useLocalStorage<{ sidebar: { width?: number } }>("settings", {
+  const breakpoint = useBreakpoints({
+    tablet: 640,
+    phablet: 880,
+    laptop: 1024,
+    desktop: 1280,
+  });
+
+  const storage = useLocalStorage<{
+    sidebar: { width?: number };
+  }>("settings", {
     sidebar: {},
   });
+
   const collections = useState<DocumentType<Collections>[]>("collections");
   const settings = useState<DocumentType<Settings>>("settings");
   const user = useState<DocumentType<User>>("user");
 
   const isReady = useState("isReady", () => false);
   const isAuth = useState("isAuth", () => false);
+  const isShowSidebar = useState("isShowSidebar", () => false);
 
-  const locale = useState<LangTypeValue>(
+  const locale = useState<LangType>(
     "locale",
-    () => config.defaultLocale as LangTypeValue
+    () => config.defaultLocale as LangType
   );
 
   const t = (message: LangMessage) =>
@@ -47,6 +53,7 @@ export const useContently = () => {
   return {
     isReady,
     isAuth,
+    isShowSidebar,
     previewUrl,
     user,
     api,
@@ -56,5 +63,6 @@ export const useContently = () => {
     collections,
     settings,
     storage,
+    breakpoint,
   };
 };

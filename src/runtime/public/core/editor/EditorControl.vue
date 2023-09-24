@@ -153,89 +153,91 @@
       <div
         :class="[$style['tools'], isStickyTools && $style['is-sticky']]"
       >
-        <DropdownControl ref="headingEl">
-          <template #default="{options}">
-            <div
-              :class="[$style['tools-item'], options.isOpen && $style['is-active']]"
-            >
+        <div :class="$style['tools-inner']">
+          <DropdownControl ref="headingEl">
+            <template #default="{options}">
+              <div
+                :class="[$style['tools-item'], options.isOpen && $style['is-active']]"
+              >
+                <IconControl
+                  :size="18"
+                  name="heading"
+                />
+              </div>
+            </template>
+
+            <template #dropdown>
+              <div :class="$style['tools-list']">
+                <div
+                  v-for="num in [1, 2, 3, 4, 5, 6]"
+                  :key="num"
+                  :class="$style['tools-list-item']"
+                  @click="setHeading(num)"
+                >
+                  Heading {{ num }}
+                </div>
+              </div>
+            </template>
+          </DropdownControl>
+          <div
+            v-for="item in commands"
+            :key="item.id"
+            :class="[$style['tools-list-item'], editor?.isActive(item.id) && $style['is-active']]"
+            @click="item.action"
+          >
+            <IconControl
+              :size="18"
+              :name="item.icon"
+            />
+          </div>
+          <DropdownControl ref="tableEl">
+            <div :class="$style['tools-list-item']">
               <IconControl
                 :size="18"
-                name="heading"
+                name="table"
               />
             </div>
-          </template>
 
-          <template #dropdown>
-            <div :class="$style['tools-list']">
-              <div
-                v-for="num in [1, 2, 3, 4, 5, 6]"
-                :key="num"
-                :class="$style['tools-list-item']"
-                @click="setHeading(num)"
-              >
-                Heading {{ num }}
+            <template #dropdown>
+              <div class="editor-control__tools-table">
+                table
               </div>
-            </div>
-          </template>
-        </DropdownControl>
-        <div
-          v-for="item in commands"
-          :key="item.id"
-          :class="[$style['tools-list-item'], editor?.isActive(item.id) && $style['is-active']]"
-          @click="item.action"
-        >
-          <IconControl
-            :size="18"
-            :name="item.icon"
-          />
-        </div>
-        <DropdownControl ref="tableEl">
+            </template>
+          </DropdownControl>
+          <DropdownControl ref="imageEl">
+            <template #default="{ options }">
+              <div
+                :class="[$style['tools-item'], options.isOpen && $style['is-active']]"
+              >
+                <IconControl
+                  :size="18"
+                  name="image"
+                />
+              </div>
+            </template>
+
+            <template #dropdown>
+              <div :class="$style['tools-list']">
+                <div
+                  :class="$style['tools-list-item']"
+                >
+                  Load from computed
+                </div>
+                <div
+                  :class="$style['tools-list-item']"
+                  @click="selectImage"
+                >
+                  Select with filemanager
+                </div>
+              </div>
+            </template>
+          </DropdownControl>
           <div :class="$style['tools-list-item']">
             <IconControl
               :size="18"
-              name="table"
+              name="magic"
             />
           </div>
-
-          <template #dropdown>
-            <div class="editor-control__tools-table">
-              table
-            </div>
-          </template>
-        </DropdownControl>
-        <DropdownControl ref="imageEl">
-          <template #default="{ options }">
-            <div
-              :class="[$style['tools-item'], options.isOpen && $style['is-active']]"
-            >
-              <IconControl
-                :size="18"
-                name="image"
-              />
-            </div>
-          </template>
-
-          <template #dropdown>
-            <div :class="$style['tools-list']">
-              <div
-                :class="$style['tools-list-item']"
-              >
-                Load from computed
-              </div>
-              <div
-                :class="$style['tools-list-item']"
-                @click="selectImage"
-              >
-                Select with filemanager
-              </div>
-            </div>
-          </template>
-        </DropdownControl>
-        <div :class="$style['tools-list-item']">
-          <IconControl
-            :size="18"
-            name="magic"
-          />
         </div>
       </div>
       <DashboardUploadFiles
@@ -271,6 +273,7 @@
   .content :global(.tiptap img) {
     max-width: 100%;
   }
+
   .content :global(.tiptap) {
     outline: none;
     padding: 16px;
@@ -278,6 +281,7 @@
 
   .tools {
     position: sticky;
+    overflow: auto;
     top: 68px;
     padding: 8px;
     display: flex;
@@ -287,10 +291,16 @@
     border-radius: var(--border-radius) var(--border-radius) 0 0;
     z-index: 2;
     transition: .2s;
+    width: 100%;
 
     &.is-sticky {
       box-shadow: var(--box-shadow-large);
     }
+  }
+
+  .tools-inner {
+    display: inline-flex;
+    flex-wrap: wrap;
   }
 
   .tools-item {

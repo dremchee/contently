@@ -6,7 +6,7 @@
     modelValue: boolean;
     title?: string;
     size?: 'small' | 'normal' | 'large'
-    direction?: 'center' | 'sidebar'
+    direction?: 'center' | 'sidebar' | 'menu'
   }>();
 
   const emit = defineEmits<{
@@ -103,6 +103,14 @@
       .modal-control__header-title {
         padding-left: 0;
       }
+    }
+
+    &.is-menu {
+      position: absolute;
+      right: auto;
+      left: 0;
+      height: 100%;
+      border-radius: 0;
     }
 
     &.is-large {

@@ -4,7 +4,7 @@
 
   const modal = ref<HTMLDivElement | null>(null);
   const isOpen = ref(false);
-  const scrollLock = useScrollLock(DocumentType.body);
+  const scrollLock = useScrollLock(document.body);
 
   onMounted(() => {
     useMutationObserver(
@@ -31,6 +31,8 @@
 <style scoped>
   .modal-overlay {
     position: fixed;
+    top: 0;
+    left: 0;
     width: 100vw;
     height: 100vh;
     min-width: 100%;
