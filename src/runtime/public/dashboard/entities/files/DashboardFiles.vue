@@ -55,27 +55,38 @@
 
   const changeInputFile = async (e: Event) => {
     const target = e.target as HTMLInputElement
-    const formData = new FormData()
 
     if(target.files) {
       isPending.value = true
-      const file = target.files[0]
-      formData.append('file', file)
-      const response = await api.uploadFile(formData)
 
-      if(response?.data) {
-        await fetchFiles()
+      const promises: FormData[] = []
 
-        toastShow({
-          text: 'Success upload file',
-          type: 'success'
-        })
-      } else {
-        toastShow({
-          text: 'This file exist',
-          type: 'error'
-        })
-      }
+      Array.from(target.files).map(file => {
+        const formData = new FormData()
+        formData.append('file', file)
+
+        if(file) {
+          promises.push(formData)
+        }
+      })
+
+      const files = await Promise.all(promises.map(data => api.uploadFile(data)))
+      await fetchFiles()
+
+      ;(await files).forEach(file => {
+        if(file) {
+          toastShow({
+            text: `Success upload file: ${file.data.originName}`,
+            type: 'success'
+          })
+        } else {
+          toastShow({
+            text: 'This file exist',
+            type: 'error'
+          })
+        }
+
+      })
 
       isPending.value = false
       target.value = ''
@@ -173,7 +184,7 @@
             :loading="isPending"
             @click="uploadFile"
           >
-            Upload file
+            {{ t('uploadFile') }}
           </ButtonControl>
         </template>
       </DashboardHeader>
@@ -181,6 +192,7 @@
     <input
       ref="inputFile"
       type="file"
+      multiple
       hidden
       @change="changeInputFile"
     >
@@ -232,7 +244,7 @@
   }
   .list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
     gap: 32px;
     transition: .2s;
 

@@ -6,9 +6,6 @@
 
 <template>
   <DashboardPageLayout>
-    <template #sidebar>
-      <DashboardSidebar />
-    </template>
     <DashboardFiles />
   </DashboardPageLayout>
 </template>
