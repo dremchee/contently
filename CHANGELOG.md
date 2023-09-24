@@ -1,4 +1,20 @@
 
+## v0.0.4
+
+[compare changes](https://github.com/dremchee/nuxt-contently/compare/v0.0.3...v0.0.4)
+
+### 🩹 Fixes
+
+- Dashboard path ([ed656ae](https://github.com/dremchee/nuxt-contently/commit/ed656ae))
+
+### 🏡 Chore
+
+- **release:** V0.0.3 ([b94be1f](https://github.com/dremchee/nuxt-contently/commit/b94be1f))
+
+### ❤️ Contributors
+
+- Dremchee ([@dremchee](http://github.com/dremchee))
+
 ## v0.0.3
 
 [compare changes](https://github.com/dremchee/nuxt-contently/compare/v0.0.2...v0.0.3)
