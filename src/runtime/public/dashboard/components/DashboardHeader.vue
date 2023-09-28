@@ -1,12 +1,16 @@
 <script lang="ts" setup>
   import { useContently } from '#imports'
   import IconControl from '#contently/public/core/IconControl.vue';
+  import { headerElement } from '#contently/public/core/editor/editor'
 
   const { breakpoint, isShowSidebar } = useContently()
 </script>
 
 <template>
-  <div :class="$style['header']">
+  <div
+    ref="headerElement"
+    :class="$style['header']"
+  >
     <div :class="$style['container']">
       <div
         v-if="!breakpoint.laptop.value"
@@ -18,7 +22,7 @@
       <div :class="$style['title']">
         <slot name="title" />
       </div>
-      <div :class="$style['action']">
+      <div :class="$style['actions']">
         <slot name="action" />
       </div>
     </div>
@@ -54,8 +58,9 @@
     flex-grow: 1;
   }
 
-  .action {
+  .actions {
     display: flex;
+    flex-wrap: wrap;
     gap: 8px;
     align-items: center;
   }

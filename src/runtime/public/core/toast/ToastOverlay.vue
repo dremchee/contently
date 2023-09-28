@@ -48,5 +48,6 @@
     gap: 8px;
     flex-direction: column-reverse;
     padding: 16px;
+    z-index: 10;
   }
 </style>

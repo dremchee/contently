@@ -42,7 +42,6 @@
   const field = ref({ ...defaultValue, ...currentData });
 
   const isEditMode = computed(() => props.mode === 'edit');
-  const isPrimary = computed(() => field.value.options?.primaryKey)
   const isValid = computed(() => [field.value.key, field.value.name].every(e => e))
 
   const saveOptions = () => {
@@ -55,7 +54,6 @@
     <FieldControlItem
       :label="String(currentField?.name)"
       :icon="currentField?.icon || ''"
-      :description="isPrimary && t('primaryKey') || ''"
     />
     <div :class="$style['controls']">
       <ControlsGroup :label="t('key')">
@@ -74,7 +72,6 @@
         <div :class="$style['advanced']">
           <CheckboxControl
             v-model="field.options.required"
-            :disabled="isPrimary"
             :label="t('required')"
           />
           <CheckboxControl
@@ -104,7 +101,7 @@
           {{ mode === 'edit' ? t('save') : t('add') }}
         </ButtonControl>
         <ButtonControl
-          v-if="mode === 'edit' && !isPrimary"
+          v-if="mode === 'edit'"
           variant="link"
           icon="trash"
           @click="emit('remove', field.id)"

@@ -20,7 +20,6 @@
   const isPending = ref(false)
 
   const form = ref({
-    key: '',
     published: false,
     content: {} as Record<string, any>
   });
@@ -33,7 +32,6 @@
 
     if (response.data) {
       resource.value = response.data;
-      form.value.key = response.data.key
       form.value.published = response.data.published
 
       Object.keys(response.data?.content || {}).forEach(key => {

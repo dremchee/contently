@@ -69,18 +69,23 @@
       </div>
     </template>
     <template #dropdown>
-      <div class="select-control__dropdown">
-        <template
-          v-for="(option, index) in options"
-          :key="index"
-        >
-          <div
-            class="select-control__dropdown-item"
-            :class="[currentValue?.value === option.value && 'is-active']"
-            @click="selectOption(option)"
+      <div
+        v-if="options && !!options?.length"
+        class="select-control__dropdown"
+      >
+        <template v-if="options && !!options?.length">
+          <template
+            v-for="(option, index) in options"
+            :key="index"
           >
-            {{ option.name }}
-          </div>
+            <div
+              class="select-control__dropdown-item"
+              :class="[currentValue?.value === option.value && 'is-active']"
+              @click="selectOption(option)"
+            >
+              {{ option.name }}
+            </div>
+          </template>
         </template>
       </div>
     </template>
@@ -147,8 +152,8 @@
     }
 
     &.is-active {
-      background-color: var(--color-brand);
-      color: var(--color-white);
+      background-color: var(--color-background-dark);
+      color: var(--color-default);
     }
   }
 </style>

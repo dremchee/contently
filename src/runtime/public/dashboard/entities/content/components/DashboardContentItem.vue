@@ -27,7 +27,9 @@
       />
     </DragHandle>
     <div :class="$style['label']">
-      {{ label }}
+      <div :class="$style['label-text']">
+        {{ label }}
+      </div>
     </div>
     <div :class="$style['date']">
       {{ formatDate(date) }}
@@ -98,9 +100,13 @@
   }
 
   .label {
-    width: 100%;
-    white-space: nowrap;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .label-text {
     overflow: hidden;
+    white-space: nowrap;
     text-overflow: ellipsis;
   }
 

@@ -50,7 +50,7 @@
   const getCollections = async () => {
     const { data } = await api.getCollectionById(String(route.params.id), pagination.value);
 
-    if (data?.singleton) {
+    if (data?.singleton && data.items) {
       const [item] = data.items;
       const { key, published, content } = item;
       form.value = {
@@ -107,7 +107,7 @@
 
   const updateSingleResource = async () => {
     isPending.value = true
-    if (page.value?._id) {
+    if (page.value?._id && page.value.items) {
       const [item] = page.value.items;
       await api.updateCollectionByResourceId(page.value._id, item._id, form.value);
       isPending.value = false

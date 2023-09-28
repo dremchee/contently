@@ -1,4 +1,5 @@
 import { ShallowRef, shallowRef } from "vue";
+import { useResizeObserver } from "@vueuse/core";
 import { Editor, EditorOptions, JSONContent } from "@tiptap/core";
 import { useEditor as useTiptapEditor, EditorContent } from "@tiptap/vue-3";
 import StarterKit from "@tiptap/starter-kit";
@@ -8,6 +9,7 @@ import { Level } from "@tiptap/extension-heading";
 import HorizontalRule from "@tiptap/extension-horizontal-rule";
 import Image from "@tiptap/extension-image";
 import ImageAdvanced from "./extensions/image";
+import { ref } from "#imports";
 
 export type EditorModelValue = {
   html: string;
@@ -17,8 +19,10 @@ export type EditorModelValue = {
 
 const instance = shallowRef<ShallowRef<Editor | undefined>>();
 
+export const headerElement = ref<HTMLDivElement | null>(null);
+
 export const commandAction = {
-  headind(level: Level) {
+  heading(level: Level) {
     instance.value?.value?.commands.toggleHeading({ level });
   },
   bold() {
@@ -51,6 +55,24 @@ export const commandAction = {
   advancedImage(src: string) {
     instance.value?.value?.chain().focus().setAdvancedImage({ src }).run();
   },
+};
+
+export const useHeaderObserver = () => {
+  const header = ref({ width: 0, height: 0, x: 0, y: 0 });
+
+  console.log(headerElement.value);
+
+  useResizeObserver(headerElement.value, ([entry]) => {
+    const { width, height, x, y } = entry.contentRect;
+    header.value = {
+      width,
+      height,
+      x,
+      y,
+    };
+  });
+
+  return { header };
 };
 
 export const useEditor = (options: Partial<EditorOptions>) => {

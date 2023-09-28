@@ -3,9 +3,6 @@
   import { useToast } from '#contently/public/core/toast'
   import DashboardMainWrapper from '../../components/DashboardMainWrapper.vue';
   import DashboardHeader from '../../components/DashboardHeader.vue';
-  import ControlsGroup from '../../../core/ControlsGroup.vue';
-  import InputField from '../../../core/InputField.vue';
-  import CheckboxControl from '../../../core/CheckboxControl.vue';
   import ButtonControl from '../../../core/ButtonControl.vue';
   import { RouterName } from '../../../../plugins/const';
   import DashboardContentForm from './components/DashboardContentForm.vue';
@@ -18,18 +15,14 @@
   const collection = await api.getCollectionById(String(route.params.id));
 
   const form = ref({
-    key: '',
     published: false,
     content: {} as Record<string, any>
   });
 
   const createContent = async () => {
-    const key = form.value.content.id as string || form.value.key
-
-    const response = await api.createCollectionById(String(collection.data?._id), {
-      ...form.value,
-      key,
-    });
+    const response = await api.createCollectionById(String(collection.data?._id),
+      form.value,
+    );
 
     if (response?.data) {
       navigateTo({

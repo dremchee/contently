@@ -33,7 +33,7 @@
     size({
       apply({ elements }) {
         const width = elements.reference.getBoundingClientRect().width
-        const widthFloating = elements.floating.children[0].getBoundingClientRect().width
+        // const widthFloating = elements.floating.children[0].getBoundingClientRect().width
 
         if(props.width === 'reference') {
           Object.assign(elements.floating.style, {

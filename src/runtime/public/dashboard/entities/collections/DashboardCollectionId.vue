@@ -34,7 +34,8 @@
     }))))
 
   const advancedOptions = ref({
-    displayField: {} as Partial<{ name: string, value: string }>
+    displayField: {} as Partial<{ name: string, value: string }>,
+    aliasField: {} as Partial<{ name: string, value: string }>
   })
 
   const addField = (data: Field) => {
@@ -54,7 +55,8 @@
       name: collection.value.name,
       fields: collection.value.fields || [],
       options: {
-        displayField: advancedOptions.value.displayField?.value || ''
+        displayField: advancedOptions.value.displayField?.value || '',
+        aliasField: advancedOptions.value.aliasField?.value || ''
       }
     }
 
@@ -103,6 +105,7 @@
     if (response.data) {
       collection.value = response.data;
       advancedOptions.value.displayField = filedItems.value.find(e => e.value === collection.value.options?.displayField) || {}
+      advancedOptions.value.aliasField = filedItems.value.find(e => e.value === collection.value.options?.aliasField) || {}
     }
   };
 
@@ -154,7 +157,7 @@
             variant="link"
             @click="routeToContent"
           >
-            {{ t('editPage') }}
+            {{ t('edit') }}
           </ButtonControl>
           <ButtonControl
             size="small"
@@ -206,7 +209,7 @@
 
         <ModalWindow
           v-model="isEditField"
-          :title="String(t('editField'))"
+          :title="t('editField')"
           direction="sidebar"
           @close="closeStateField"
         >
@@ -249,7 +252,7 @@
       </template>
     </div>
     <div :class="$style['options']">
-      <CollapseControl>
+      <CollapseControl open>
         <template #trigger>
           <div :class="$style['options-title']">
             {{ t('advancedSettings') }}
@@ -271,6 +274,13 @@
           <ControlsGroup :label="t('displayFieldTemplate')">
             <SelectControl
               v-model="advancedOptions.displayField"
+              :options="filedItems"
+              cleanable
+            />
+          </ControlsGroup>
+          <ControlsGroup :label="t('previewURL')">
+            <SelectControl
+              v-model="advancedOptions.aliasField"
               :options="filedItems"
               cleanable
             />
@@ -307,7 +317,6 @@
   }
 
   .options-title {
-    margin-bottom: 16px;
     font-weight: 500;
   }
 

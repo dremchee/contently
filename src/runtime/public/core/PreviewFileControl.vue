@@ -79,8 +79,9 @@
       <template v-if="isImage">
         <img
           :src="path"
-          alt=""
+          :alt="name"
           class="preview-file-control__image"
+          loading="lazy"
         >
       </template>
       <div

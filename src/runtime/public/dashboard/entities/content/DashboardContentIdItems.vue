@@ -130,7 +130,7 @@
             size="small"
             @click="routeToCollection"
           >
-            {{ t('editCollection') }}
+            {{ t('edit') }}
           </ButtonControl>
           <ButtonControl
             size="small"

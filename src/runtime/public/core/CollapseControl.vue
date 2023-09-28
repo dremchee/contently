@@ -2,7 +2,13 @@
   import { computed, ref, useCssModule } from '#imports';
   import IconControl from './IconControl.vue';
 
-  const isCollapsed = ref(false);
+  const props = withDefaults(defineProps<{
+    open: boolean
+  }>(), {
+    open: false
+  })
+
+  const isCollapsed = ref(props.open);
   const collapse = () => {
     isCollapsed.value = !isCollapsed.value;
   };
@@ -61,6 +67,9 @@
   .trigger {
     display: flex;
     gap: 8px;
+    cursor: pointer;
+    margin-bottom: 8px;
+    padding: 8px 0;
   }
 
   .caret {

@@ -6,7 +6,6 @@
 
   const props = defineProps<{
     modelValue: {
-      key: string;
       published: boolean;
       content: Record<string, any>;
     };
@@ -20,7 +19,6 @@
   const computedData = computed(() => props.modelValue);
 
   const form = ref({
-    key: computedData.value?.key || '',
     published: computedData.value?.published || false,
     content: computedData.value?.content || {},
   });
