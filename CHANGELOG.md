@@ -1,4 +1,23 @@
 
+## v0.0.5
+
+[compare changes](https://github.com/dremchee/nuxt-contently/compare/v0.0.4...v0.0.5)
+
+### 🚀 Enhancements
+
+- Localization ([66576f2](https://github.com/dremchee/nuxt-contently/commit/66576f2))
+
+### 🏡 Chore
+
+- Update nuxt ([f27e8fc](https://github.com/dremchee/nuxt-contently/commit/f27e8fc))
+- Update types ([83554a6](https://github.com/dremchee/nuxt-contently/commit/83554a6))
+- Remove primary key of fields ([e631aa0](https://github.com/dremchee/nuxt-contently/commit/e631aa0))
+- **ui:** Update ui ([f55e21d](https://github.com/dremchee/nuxt-contently/commit/f55e21d))
+
+### ❤️ Contributors
+
+- Dremchee ([@dremchee](http://github.com/dremchee))
+
 ## v0.0.4
 
 [compare changes](https://github.com/dremchee/nuxt-contently/compare/v0.0.3...v0.0.4)
