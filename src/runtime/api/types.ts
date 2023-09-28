@@ -63,15 +63,28 @@ export enum Status {
 }
 
 export type Collections = {
+  /**
+   * Unique key
+   */
   key: string;
   name: string;
   published: boolean;
   singleton: boolean;
+  /**
+   * Creating fields for a type: Collection in content field
+   */
   fields: Field[];
-  items: DocumentType<Collection>[];
   options?: {
+    /**
+     * Field for desplay in collection list
+     */
     displayField?: string;
+    /**
+     * Preview URL, set alias key of content type: Collection
+     */
+    aliasField?: string;
   };
+  readonly items?: DocumentType<Collection>[];
   readonly total?: number;
   readonly limit?: number;
   readonly skip?: number;
@@ -80,7 +93,7 @@ export type Collections = {
 };
 
 export type Collection = {
-  key: string;
+  key?: string;
   published: boolean;
   status: Status;
   content: Record<string, any>;
@@ -147,7 +160,6 @@ export type Field<
     readonly: boolean;
     hidden: boolean;
     unique?: boolean;
-    primaryKey?: boolean;
   };
   data?: Record<string, Data>;
   schema?: Schema;
