@@ -1,6 +1,5 @@
 import { DocumentType, Collections, Field, FieldType } from "../../types";
 import { ApiService } from "../../api";
-import { nanoid } from "nanoid";
 import { settingsService } from "../settings/service";
 
 class CollectionService extends ApiService {
@@ -29,33 +28,9 @@ class CollectionService extends ApiService {
   }
 
   async create(payload: { key: string; name: string; singleton: boolean }) {
-    const fields: Field<{
-      autoGenerateKey: boolean;
-    }>[] = [
-      {
-        id: nanoid(),
-        key: "id",
-        type: FieldType.KEY,
-        name: "ID",
-        description: "",
-        options: {
-          required: true,
-          hidden: true,
-          readonly: true,
-          primaryKey: true,
-        },
-        data: {
-          [FieldType.KEY]: {
-            autoGenerateKey: true,
-          },
-        },
-      },
-    ];
-
     const data: Collections = {
       published: false,
-      items: [],
-      fields,
+      fields: [],
       createdAt: Date.now(),
       updatedAt: Date.now(),
       ...payload,
@@ -64,22 +39,6 @@ class CollectionService extends ApiService {
     const result = await this.db.insertAsync<Collections>({
       ...data,
     });
-
-    if (result.singleton) {
-      this.collection(result.key).ensureIndexAsync({
-        fieldName: "key",
-        unique: true,
-      });
-
-      const { key } = payload;
-
-      this.createCollectionById(result._id, {
-        key,
-        content: {
-          id: key,
-        },
-      });
-    }
 
     if (result) {
       settingsService.setSettingsOrder("collections", result._id);
@@ -234,6 +193,13 @@ class CollectionService extends ApiService {
     const collection = await this.findCollectionById(parentId);
 
     if (collection) {
+      const aliasField = collection?.options?.aliasField;
+
+      if (aliasField) {
+        const key = data.content[aliasField];
+        data.key = key;
+      }
+
       return await this.collection(collection?.key).updateAsync(
         {
           _id: resourceId,

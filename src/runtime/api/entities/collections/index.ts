@@ -1,18 +1,13 @@
-import { Collections, DocumentType, RouteOptions } from "../../types";
+import { Collections, RouteOptions } from "../../types";
 import { collectionService } from "./service";
 import { buildResponse, buildResponseError } from "../../utils/helpers";
 import { getRouterParam, getQuery, readBody } from "h3";
 import { validateBody, Type } from "h3-typebox";
-import { settingsService } from "../settings/service";
 
 const collectionsSchema = Type.Object({
   key: Type.String({ minLength: 1 }),
   name: Type.String({ minLength: 1 }),
   singleton: Type.Boolean(),
-});
-
-const collectionSchema = Type.Object({
-  key: Type.String({ minLength: 1 }),
 });
 
 function findDuplicate(arr: string[]) {
@@ -67,8 +62,8 @@ const findById: RouteOptions = {
     const query = getQuery(event) as { limit?: number; skip?: number };
 
     const options = {
-      limit: Number(query.limit),
-      skip: Number(query.skip),
+      limit: Number(query.limit || 10),
+      skip: Number(query.skip || 0),
     };
 
     if (id) {
@@ -144,7 +139,7 @@ const createById: RouteOptions = {
     requireAuth: true,
   },
   async handler(event) {
-    const data = await validateBody(event, collectionSchema);
+    const data = await readBody(event);
     const id = getRouterParam(event, "id");
 
     if (id) {
