@@ -165,7 +165,7 @@ export default defineNuxtModule<ModuleOptions>({
       {
         name: "useContently",
         as: "useContently",
-        from: resolve("./runtime/public/core/composable.ts"),
+        from: resolve("./runtime/public/core/composable"),
       },
     ]);
     addServerPlugin(resolve("./runtime/server/plugin"));
