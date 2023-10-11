@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { computed } from '#imports'
-import IconControl from '#contently/public/core/IconControl.vue';
+import IconControl from '#runtime/public/ui/IconControl.vue';
 import { DragHandle } from 'vue-slicksort'
 
 const props = withDefaults(defineProps<{

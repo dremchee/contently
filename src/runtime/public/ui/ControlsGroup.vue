@@ -5,8 +5,10 @@
     label?: string;
     optional?: string;
     message?: string;
+    required?: boolean;
     type?: 'label';
     direction?: 'column' | 'row'
+    error?: boolean
   }>();
 
   const tag = computed(() => {
@@ -17,7 +19,11 @@
     return 'div';
   });
 
-  const classList = computed(() => [props.direction && `is-${props.direction}`])
+  const classList = computed(() => [
+    props.direction && `is-${props.direction}`,
+    props.type === 'label' && 'is-label',
+    props.error && 'is-error'
+  ])
 </script>
 
 <template>
@@ -31,7 +37,7 @@
       class="control-group__label"
     >
       <div class="control-group__label-text">
-        {{ label }}
+        {{ label }} {{ required ? '*' : '' }}
       </div>
       <div
         v-if="optional"
@@ -60,8 +66,13 @@
 
     &.is-row {
       .control-group__container {
+        align-items: center;
         flex-direction: row;
       }
+    }
+
+    &.is-label {
+      cursor: pointer;
     }
   }
 
@@ -69,6 +80,10 @@
     display: flex;
     font-size: 14px;
     font-weight: 500;
+
+    .is-error & {
+      color: var(--color-error);
+    }
   }
 
   .control-group__container {
@@ -87,5 +102,9 @@
   .control-group__message {
     font-size: 12px;
     color: var(--color-secondary-dark);
+
+    .is-error & {
+      color: var(--color-error);
+    }
   }
 </style>

@@ -1,10 +1,10 @@
 <script lang="ts" setup>
   import { computed, ref, useContently, watch } from '#imports';
-  import ButtonControl from '#contently/public/core/ButtonControl.vue';
-  import InputField from '#contently/public/core/InputField.vue';
-  import TextareaField from '#contently/public/core/TextareaField.vue';
-  import ControlsGroup from '#contently/public/core/ControlsGroup.vue';
-  import { DocumentType, File } from '#contently/api/types';
+  import ButtonControl from '#runtime/public/ui/ButtonControl.vue';
+  import InputField from '#runtime/public/ui/InputField.vue';
+  import TextareaField from '#runtime/public/ui/TextareaField.vue';
+  import ControlsGroup from '#runtime/public/ui/ControlsGroup.vue';
+  import { DocumentType, File } from '#runtime/api/types';
   import DashboardFileCard from './DashboardFileCard.vue';
   import { useDateFormat } from '@vueuse/core';
   const formatDate = (value: number) => useDateFormat(value, 'DD MMMM YYYY HH:mm:ss').value;

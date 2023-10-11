@@ -59,20 +59,20 @@ const findById: RouteOptions = {
   method: "get",
   async handler(event) {
     const id = getRouterParam(event, "id");
-    const query = getQuery(event) as { limit?: number; skip?: number };
+    const query = getQuery<{ limit?: number; skip?: number }>(event);
 
     const options = {
       limit: Number(query.limit || 10),
       skip: Number(query.skip || 0),
     };
 
-    if (id) {
-      const collections = await collectionService.findCollectionById(
-        id,
-        options
-      );
-      return buildResponse(collections);
+    if (!id) {
+      return buildResponseError(event, 403);
     }
+
+    const collections = await collectionService.findCollectionById(id, options);
+
+    return buildResponse(collections);
   },
 };
 
@@ -81,10 +81,12 @@ const removeById: RouteOptions = {
   method: "delete",
   async handler(event) {
     const id = getRouterParam(event, "id");
-    if (id) {
-      const collections = await collectionService.removeCollectionById(id);
-      return buildResponse(collections);
+    if (!id) {
+      return buildResponseError(event, 403);
     }
+
+    const collections = await collectionService.removeCollectionById(id);
+    return buildResponse(collections);
   },
 };
 
@@ -93,10 +95,32 @@ const publicFindByKey: RouteOptions = {
   method: "get",
   async handler(event) {
     const key = getRouterParam(event, "key");
-    if (key) {
-      const collections = await collectionService.findCollectionByKey(key);
-      return buildResponse(collections);
+    const query = getQuery<{
+      limit?: string;
+      skip?: string;
+      type?: "singleton";
+    }>(event);
+
+    const options = {
+      limit: Number(query.limit || 10),
+      skip: Number(query.skip || 0),
+      type: query.type,
+    };
+
+    if (!key) {
+      return buildResponseError(event, 403);
     }
+
+    const collection = await collectionService.findCollectionByKey(
+      key,
+      options
+    );
+
+    if (options.type === "singleton") {
+      return buildResponse(await collection?.items[0]);
+    }
+
+    return buildResponse(collection);
   },
 };
 
@@ -106,13 +130,15 @@ const publicFindByKeyResource: RouteOptions = {
   async handler(event) {
     const key = getRouterParam(event, "key");
     const child = getRouterParam(event, "child");
-    if (key && child) {
-      const collections = await collectionService.findCollectionByResourceKey(
-        key,
-        child
-      );
-      return buildResponse(collections);
+    if (!key || !child) {
+      return buildResponseError(event, 403);
     }
+
+    const collections = await collectionService.findCollectionByResourceKey(
+      key,
+      child
+    );
+    return buildResponse(collections);
   },
 };
 
@@ -122,13 +148,15 @@ const findByResourceId: RouteOptions = {
   async handler(event) {
     const parentId = getRouterParam(event, "id");
     const resourceId = getRouterParam(event, "resourceId");
-    if (parentId && resourceId) {
-      const collections = await collectionService.findCollectionByResourceId(
-        parentId,
-        resourceId
-      );
-      return buildResponse(collections);
+    if (!parentId || !resourceId) {
+      return buildResponseError(event, 403);
     }
+
+    const collections = await collectionService.findCollectionByResourceId(
+      parentId,
+      resourceId
+    );
+    return buildResponse(collections);
   },
 };
 
@@ -142,10 +170,12 @@ const createById: RouteOptions = {
     const data = await readBody(event);
     const id = getRouterParam(event, "id");
 
-    if (id) {
-      const result = await collectionService.createCollectionById(id, data);
-      return buildResponse(result);
+    if (!id) {
+      return buildResponseError(event, 403);
     }
+
+    const result = await collectionService.createCollectionById(id, data);
+    return buildResponse(result);
   },
 };
 
@@ -156,22 +186,20 @@ const updateById: RouteOptions = {
     requireAuth: true,
   },
   async handler(event) {
-    const data = (await readBody(event)) as Collections;
+    const data = await readBody<Collections>(event);
     const id = getRouterParam(event, "id");
 
-    if (id) {
-      const duplicateKeys = findDuplicate(data.fields.map((e) => e.key));
+    if (!id) {
+      return buildResponseError(event, 403);
+    }
 
-      if (!duplicateKeys.length) {
-        const result = await collectionService.updateCollectionById(id, data);
-        return buildResponse(result);
-      } else {
-        return buildResponseError(
-          event,
-          409,
-          `Dublicale keys: ${duplicateKeys}`
-        );
-      }
+    const duplicateKeys = findDuplicate(data.fields.map((e) => e.key));
+
+    if (!duplicateKeys.length) {
+      const result = await collectionService.updateCollectionById(id, data);
+      return buildResponse(result);
+    } else {
+      return buildResponseError(event, 409, `Dublicale keys: ${duplicateKeys}`);
     }
   },
 };
@@ -186,14 +214,16 @@ const updateByResourceId: RouteOptions = {
     const data = await readBody(event);
     const parentId = getRouterParam(event, "id");
     const resourceId = getRouterParam(event, "resourceId");
-    if (parentId && resourceId) {
-      const result = await collectionService.updateCollectionByResourceId(
-        parentId,
-        resourceId,
-        data
-      );
-      return buildResponse(result);
+    if (!parentId || !resourceId) {
+      return buildResponseError(event, 403);
     }
+
+    const result = await collectionService.updateCollectionByResourceId(
+      parentId,
+      resourceId,
+      data
+    );
+    return buildResponse(result);
   },
 };
 
@@ -206,6 +236,11 @@ const removeByResourceId: RouteOptions = {
   async handler(event) {
     const parentId = getRouterParam(event, "id");
     const resourceId = getRouterParam(event, "resourceId");
+
+    if (!parentId || !resourceId) {
+      return buildResponseError(event, 403);
+    }
+
     if (parentId && resourceId) {
       const result = await collectionService.removeCollectionByResourceId(
         parentId,
@@ -226,10 +261,12 @@ const insertById: RouteOptions = {
     const id = getRouterParam(event, "id");
     const body = await readBody(event);
 
-    if (id) {
-      const result = await collectionService.insertData(String(id), body);
-      return buildResponse(result);
+    if (!id) {
+      return buildResponseError(event, 403);
     }
+
+    const result = await collectionService.insertData(id, body);
+    return buildResponse(result);
   },
 };
 

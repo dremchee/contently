@@ -1,8 +1,8 @@
 <script lang="ts" setup>
   import { definePageMeta, useContently } from '#imports';
   import DashboardNavigation from '../dashboard/components/DashboardNavigation.vue';
-  import ModalOverlay from '../core/modal/ModalOverlay.vue';
-  import ToastOverlay from '../core/toast/ToastOverlay.vue';
+  import ModalOverlay from '../ui/modal/ModalOverlay.vue';
+  import ToastOverlay from '../ui/toast/ToastOverlay.vue';
 
   const { breakpoint } = useContently()
 
@@ -39,7 +39,9 @@
   }
 
   .navigation {
+    width: 60px;
     .is-compact & {
+      width: 100%;
       position: sticky;
       bottom: 0;
       z-index: 10;
@@ -47,8 +49,11 @@
   }
 
   .content {
-    width: 100%;
+    width: calc(100% - 60px);
     height: 100%;
     flex-grow: 1;
+    .is-compact & {
+      width: 100%;
+    }
   }
 </style>

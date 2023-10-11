@@ -1,4 +1,10 @@
-import { DocumentType, Collections, Field, FieldType } from "../../types";
+import {
+  DocumentType,
+  Collections,
+  Field,
+  FieldType,
+  Collection,
+} from "../../types";
 import { ApiService } from "../../api";
 import { settingsService } from "../settings/service";
 
@@ -100,8 +106,17 @@ class CollectionService extends ApiService {
     }
   }
 
-  async findCollectionByKey(key: string) {
-    const data = await this.db.findOneAsync<Collections>({
+  async findCollectionByKey(
+    key: string,
+    params: {
+      limit: number;
+      skip: number;
+    } = {
+      limit: 10,
+      skip: 0,
+    }
+  ) {
+    const data = await this.db.findOneAsync<DocumentType<Collections>>({
       key,
     });
 
@@ -125,6 +140,9 @@ class CollectionService extends ApiService {
     }
   }
 
+  /**
+   * @deprecated
+   */
   async findCollectionByResourceKey(parentKey: string, resourceKey: string) {
     const parent = await this.findCollectionByKey(parentKey);
 
@@ -155,13 +173,14 @@ class CollectionService extends ApiService {
     const collection = await this.findCollectionById(id);
 
     if (collection) {
-      return await this.db.updateAsync(
+      return await this.db.updateAsync<Collections>(
         {
           key: collection.key,
         },
         {
           $set: {
             ...data,
+            updatedAt: Date.now(),
           },
         }
       );
@@ -188,17 +207,27 @@ class CollectionService extends ApiService {
   async updateCollectionByResourceId(
     parentId: string,
     resourceId: string,
-    data: any
+    data: Partial<Collection>
   ) {
     const collection = await this.findCollectionById(parentId);
 
     if (collection) {
       const aliasField = collection?.options?.aliasField;
+      const content: Record<string, any> = {};
+
+      if (data.content) {
+        collection.fields.forEach((field) => {
+          content[field.key] = data.content?.[field.key];
+        });
+      }
 
       if (aliasField) {
-        const key = data.content[aliasField];
+        const key = data.content?.[aliasField];
         data.key = key;
       }
+
+      data.content = content;
+      data.updatedAt = Date.now();
 
       return await this.collection(collection?.key).updateAsync(
         {

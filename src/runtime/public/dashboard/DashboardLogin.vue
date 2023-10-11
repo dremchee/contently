@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-  import { RouterName } from '../../plugins/const';
+  import { RouterName } from '#runtime/public/core/const'
   import config from '../../../config.json';
   import { navigateTo, ref, useContently } from '#imports';
-  import InputField from '../core/InputField.vue';
-  import ButtonControl from '../core/ButtonControl.vue';
+  import InputField from '../ui/InputField.vue';
+  import ButtonControl from '../ui/ButtonControl.vue';
   const { api, t } = useContently();
   import { version } from '../../../../package.json'
 
@@ -84,3 +84,4 @@
     font-size: 14px;
   }
 </style>
+../core/const

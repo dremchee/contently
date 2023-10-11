@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import { useContently } from '#imports';
-  import ModalWindow from '#contently/public/core/modal/ModalWindow.vue';
+  import ModalWindow from '#runtime/public/ui/modal/ModalWindow.vue';
 
   const { breakpoint, isShowSidebar, settings } = useContently()
 </script>
@@ -46,12 +46,13 @@
   }
 
   .main {
-    flex-grow: 1;
+    width: 100%;
     overflow: auto;
-    height: 100vh;
+    min-height: 100vh;
 
     .is-compact & {
-      overflow: inherit;
+      /* flex-shrink: 0; */
+      overflow: initial;
       height: 100%;
     }
   }

@@ -2,10 +2,10 @@
   import { ref, useContently } from '#imports';
   import { SlickList, SlickItem } from 'vue-slicksort'
   import ListFieldItem from './ListFieldItem.vue';
-  import ControlsGroup from '#contently/public/core/ControlsGroup.vue';
-  import InputField from '#contently/public/core/InputField.vue';
-  import ButtonControl from '#contently/public/core/ButtonControl.vue';
-  import SelectControl from '#contently/public/core/SelectControl.vue';
+  import ControlsGroup from '#runtime/public/ui/ControlsGroup.vue';
+  import InputField from '#runtime/public/ui/InputField.vue';
+  import ButtonControl from '#runtime/public/ui/ButtonControl.vue';
+  import SelectControl from '#runtime/public/ui/SelectControl.vue';
   import { fields, PRIMITIVE_FIELDS } from '../';
 
   const props = defineProps<{

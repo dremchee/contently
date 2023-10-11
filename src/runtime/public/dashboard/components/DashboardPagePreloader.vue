@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import PreloaderControl from '#contently/public/core/PreloaderControl.vue';
+  import PreloaderControl from '#runtime/public/ui/PreloaderControl.vue';
 </script>
 
 <template>

@@ -1,7 +1,7 @@
 import { AsyncData, UseFetchOptions, navigateTo } from "#app";
 import { useFetch } from "#imports";
-import { useContently } from "./composable";
-import { RouterName, API_BASE_URL } from "./const";
+import { useContently } from "../core/composable";
+import { RouterName, API_BASE_URL } from "../core/const";
 
 export const useApiFetch = <T>(
   url: string,

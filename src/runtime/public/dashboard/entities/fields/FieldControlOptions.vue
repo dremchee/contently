@@ -1,13 +1,13 @@
 <script lang="ts" setup>
   import { computed, ref, useContently } from '#imports';
   import { nanoid } from 'nanoid';
-  import ControlsGroup from '#contently/public/core/ControlsGroup.vue';
-  import InputField from '#contently/public/core/InputField.vue';
-  import ButtonControl from '#contently/public/core/ButtonControl.vue';
-  import CheckboxControl from '#contently/public/core/CheckboxControl.vue';
+  import ControlsGroup from '#runtime/public/ui/ControlsGroup.vue';
+  import InputField from '#runtime/public/ui/InputField.vue';
+  import ButtonControl from '#runtime/public/ui/ButtonControl.vue';
+  import CheckboxControl from '#runtime/public/ui/CheckboxControl.vue';
   import FieldControlItem from './FieldControlItem.vue';
   import { fields } from '.';
-  import { Field, FieldType } from '#contently/api/types';
+  import { Field, FieldType } from '#runtime/api/types';
 
   const { t } = useContently();
 

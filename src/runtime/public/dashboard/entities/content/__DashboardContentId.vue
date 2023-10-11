@@ -1,14 +1,14 @@
 <script lang="ts" setup>
   import { useContently, useRoute, useRouter, ref, computed, watch } from '#imports';
-  import { useToast } from '#contently/public/core/toast'
-  import { DocumentType, Collections } from '#contently/api/types'
+  import { useToast } from '#runtime/public/ui/toast'
+  import { DocumentType, Collections } from '#runtime/api/types'
   import { RouterName } from './../../../../plugins/const';
   import DashboardMainWrapper from '../../components/DashboardMainWrapper.vue';
   import DashboardHeader from '../../components/DashboardHeader.vue';
-  import ButtonControl from '../../../core/ButtonControl.vue';
+  import ButtonControl from '../../../ui/ButtonControl.vue';
   import DashboardContentItem from './components/DashboardContentItem.vue';
   import DashboardContentForm from './components/DashboardContentForm.vue';
-  import PaginationControl from '#contently/public/core/PaginationControl.vue';
+  import PaginationControl from '#runtime/public/ui/PaginationControl.vue';
 
   const route = useRoute();
   const router = useRouter();
@@ -245,3 +245,4 @@
     }
   }
 </style>
+../../../core/const

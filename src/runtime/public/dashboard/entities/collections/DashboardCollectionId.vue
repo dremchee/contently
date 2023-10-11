@@ -1,22 +1,24 @@
 <script lang="ts" setup>
   import { useContently, ref, onMounted, useRoute, computed, navigateTo } from '#imports';
   import { SlickList, SlickItem } from 'vue-slicksort'
-  import { useToast } from '#contently/public/core/toast'
+  import { useToast } from '#runtime/public/ui/toast'
   import DashboardMainWrapper from '../../components/DashboardMainWrapper.vue';
   import DashboardHeader from '../../components/DashboardHeader.vue';
-  import ControlsGroup from '#contently/public/core/ControlsGroup.vue';
-  import InputField from '#contently/public/core/InputField.vue';
-  import SelectControl from '#contently/public/core/SelectControl.vue';
-  import FieldControl from '#contently/public/dashboard/entities/fields/FieldControl.vue';
-  import FieldControlType from '#contently/public/dashboard/entities/fields/FieldControlType.vue';
-  import FieldControlOptions from '#contently/public/dashboard/entities/fields/FieldControlOptions.vue';
-  import ModalWindow from '../../../core/modal/ModalWindow.vue';
-  import CollapseControl from '#contently/public/core/CollapseControl.vue';
+  import ControlsGroup from '#runtime/public/ui/ControlsGroup.vue';
+  import InputField from '#runtime/public/ui/InputField.vue';
+  import SelectControl from '#runtime/public/ui/SelectControl.vue';
+  import FieldControl from '#runtime/public/dashboard/entities/fields/FieldControl.vue';
+  import FieldControlType from '#runtime/public/dashboard/entities/fields/FieldControlType.vue';
+  import FieldControlOptions from '#runtime/public/dashboard/entities/fields/FieldControlOptions.vue';
+  import ModalWindow from '../../../ui/modal/ModalWindow.vue';
+  import CollapseControl from '#runtime/public/ui/CollapseControl.vue';
 
-  import ButtonControl from '../../../core/ButtonControl.vue';
+  import ButtonControl from '../../../ui/ButtonControl.vue';
   import { DocumentType, Collections, Field, FieldType } from '../../../../api/types';
-  import { fields } from '#contently/public/dashboard/entities/fields';
-  import { RouterName } from '#contently/plugins/const';
+  import { fields } from '#runtime/public/dashboard/entities/fields';
+  import { RouterName } from '#runtime/public/core/const'
+  import CheckboxControl from '#runtime/public/ui/CheckboxControl.vue';
+  import SwitchControl from '#runtime/public/ui/SwitchControl.vue';
 
   const route = useRoute();
   const { api, t } = useContently();
@@ -27,6 +29,7 @@
   const selectFieldType = ref('' as FieldType);
   const selectEditField = ref({} as Field);
   const collection = ref({} as DocumentType<Collections>);
+  const isSingleton = computed(() => collection.value.singleton)
 
   const filedItems = computed(() => (collection.value.fields?.map((item) => ({
       name: item.name,
@@ -64,7 +67,7 @@
       ...payload,
     });
     toastShow({
-      text: `Update fields from collection: ${collection.value.name}`,
+      message: `Update fields from collection: ${collection.value.name}`,
       type: 'success'
     })
   };
@@ -93,7 +96,7 @@
     collection.value.fields.splice(index, 1);
 
     toastShow({
-      text: `Removed field: ${selectEditField.value.key}`,
+      message: `Removed field: ${selectEditField.value.key}`,
       type: 'warning'
     })
     closeStateField()
@@ -260,6 +263,17 @@
         </template>
 
         <div :class="$style['options-conatiner']">
+          <ControlsGroup
+            type="label"
+            direction="row"
+          >
+            <CheckboxControl
+              v-model="collection.singleton"
+              :label="t('singleton')"
+              size="small"
+              disabled
+            />
+          </ControlsGroup>
           <ControlsGroup :label="t('key')">
             <InputField
               v-model="collection.key"
@@ -271,20 +285,23 @@
               v-model="collection.name"
             />
           </ControlsGroup>
-          <ControlsGroup :label="t('displayFieldTemplate')">
-            <SelectControl
-              v-model="advancedOptions.displayField"
-              :options="filedItems"
-              cleanable
-            />
-          </ControlsGroup>
-          <ControlsGroup :label="t('previewURL')">
-            <SelectControl
-              v-model="advancedOptions.aliasField"
-              :options="filedItems"
-              cleanable
-            />
-          </ControlsGroup>
+
+          <template v-if="!isSingleton">
+            <ControlsGroup :label="t('displayFieldTemplate')">
+              <SelectControl
+                v-model="advancedOptions.displayField"
+                :options="filedItems"
+                cleanable
+              />
+            </ControlsGroup>
+            <ControlsGroup :label="t('previewURL')">
+              <SelectControl
+                v-model="advancedOptions.aliasField"
+                :options="filedItems"
+                cleanable
+              />
+            </ControlsGroup>
+          </template>
         </div>
       </CollapseControl>
     </div>
@@ -326,4 +343,3 @@
     gap: 16px;
   }
 </style>
-../fields

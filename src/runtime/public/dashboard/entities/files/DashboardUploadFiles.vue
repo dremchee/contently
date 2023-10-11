@@ -1,7 +1,7 @@
 <script lang="ts" setup>
   import { computed, ref, useContently, watch } from '#imports';
-  import { DocumentType, Files, File } from '#contently/api/types'
-  import ModalWindow from '#contently/public/core/modal/ModalWindow.vue';
+  import { DocumentType, Files, File } from '#runtime/api/types'
+  import ModalWindow from '#runtime/public/ui/modal/ModalWindow.vue';
   import DashboardFileCard from './DashboardFileCard.vue';
 
   const { api, t } = useContently()

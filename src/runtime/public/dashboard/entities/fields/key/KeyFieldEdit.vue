@@ -1,7 +1,7 @@
 <script lang="ts" setup>
   import { computed, useContently, onMounted } from '#imports';
-  import CheckboxControl from '#contently/public/core/CheckboxControl.vue';
-  import ControlsGroup from '#contently/public/core/ControlsGroup.vue';
+  import CheckboxControl from '#runtime/public/ui/CheckboxControl.vue';
+  import ControlsGroup from '#runtime/public/ui/ControlsGroup.vue';
   import { KeyFieldData } from './types'
 
   const defaultProps: KeyFieldData = {

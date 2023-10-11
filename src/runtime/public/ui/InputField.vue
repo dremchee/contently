@@ -1,19 +1,28 @@
 <script lang="ts" setup>
-  defineProps<{
+  import { computed, useCssModule } from '#imports';
+
+  const props = defineProps<{
     modelValue: string;
+    error?: boolean
   }>();
 
   const emit = defineEmits<{
     (e: 'update:modelValue', value: string): void;
   }>();
 
+  const style = useCssModule()
+
   const onInput = (e: Event) => {
     emit('update:modelValue', (e.target as HTMLInputElement).value);
   };
+
+  const classList = computed(() => [
+    props.error && style['is-error']
+  ])
 </script>
 
 <template>
-  <div :class="$style['input']">
+  <div :class="[$style['input'], classList]">
     <input
       :class="$style['field']"
       :value="modelValue"
@@ -42,6 +51,15 @@
     &:focus {
       outline: 1px solid var(--color-brand);
       border: 1px solid var(--color-brand);
+
+      .is-error & {
+        outline: 1px solid var(--color-error);
+        border: 1px solid var(--color-error);
+      }
+    }
+
+    .is-error & {
+      border: 1px solid var(--color-error);
     }
   }
 </style>

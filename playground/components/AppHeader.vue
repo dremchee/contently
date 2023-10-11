@@ -4,10 +4,12 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
     <div class="container px-5">
-      <a
+      <NuxtLink
         class="navbar-brand"
-        href="#page-top"
-      >Start Bootstrap</a>
+        to="/"
+      >
+        Start Bootstrap
+      </NuxtLink>
       <button
         class="navbar-toggler"
         type="button"
@@ -23,6 +25,16 @@
         id="navbarResponsive"
         class="collapse navbar-collapse"
       >
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <NuxtLink
+              class="nav-link"
+              to="/blog"
+            >
+              Blog
+            </NuxtLink>
+          </li>
+        </ul>
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
             <a

@@ -3,6 +3,7 @@ import sharp, { ResizeOptions, FormatEnum } from "sharp";
 import { lookup, extension } from "mime-types";
 import { resolve } from "node:path";
 import { unlinkSync, readFileSync } from "node:fs";
+import { unlink, readFile } from "node:fs/promises";
 import { ApiService } from "../../api";
 
 class FileService extends ApiService {
@@ -78,7 +79,7 @@ class FileService extends ApiService {
         `${this.config.uploadsPath}/${response.name}`
       );
       try {
-        await unlinkSync(filepath);
+        await unlink(filepath);
       } catch (err) {
         console.log(err);
       }
@@ -145,7 +146,7 @@ class FileService extends ApiService {
           type: response.type,
           size: response.size,
         },
-        data: readFileSync(filepath),
+        data: await readFile(filepath),
       };
     }
   }

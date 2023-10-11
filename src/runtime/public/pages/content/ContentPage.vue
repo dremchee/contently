@@ -1,8 +1,8 @@
 <script lang="ts" setup>
   import { computed, onMounted, useContently, navigateTo, useRouter, watch, definePageMeta } from '#imports'
-  import DashboardPageLayout from '#contently/public/dashboard/components/DashboardPageLayout.vue'
-  import DashboardSidebar from '#contently/public/dashboard/components/DashboardSidebar.vue';
-  import { RouterName } from '#contently/plugins/const';
+  import DashboardPageLayout from '#runtime/public/dashboard/components/DashboardPageLayout.vue'
+  import DashboardSidebar from '#runtime/public/dashboard/components/DashboardSidebar.vue';
+  import { RouterName } from '#runtime/public/core/const'
 
   const { collections } = useContently()
   const router = useRouter()

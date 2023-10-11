@@ -1,14 +1,15 @@
 <script lang="ts" setup>
-  import { useContently, ref, watch } from '#imports'
-  import { useToast } from '#contently/public/core/toast'
-  import { LANGUAGES } from '../../../../plugins/const'
-  import ButtonControl from '../../../core/ButtonControl.vue';
+  import { useContently, ref, watch, onMounted } from '#imports'
+  import { useToast } from '#runtime/public/ui/toast'
+  import { LANGUAGES } from '#runtime/public/core/const'
+  import ButtonControl from '../../../ui/ButtonControl.vue';
   import DashboardMainWrapper from '../../components/DashboardMainWrapper.vue';
   import DashboardHeader from '../../components/DashboardHeader.vue';
-  import ControlsGroup from '../../../core/ControlsGroup.vue';
-  import InputField from '../../../core/InputField.vue';
-  import SelectControl from '../../../core/SelectControl.vue';
-
+  import ControlsGroup from '../../../ui/ControlsGroup.vue';
+  import InputField from '../../../ui/InputField.vue';
+  import SelectControl from '../../../ui/SelectControl.vue';
+  import { LangType } from '#runtime/api/types';
+  import { notice } from '#runtime/public/core/notification'
 
   const { api, t, settings, locale } = useContently()
   const { toastShow } = useToast()
@@ -24,21 +25,24 @@
   const lang = ref(langs.find(e => e.value === settings.value.meta.locale) || langs[0])
 
   watch(lang, (value) => {
-    form.value.locale = value.value
-    locale.value = form.value.locale
+    form.value.locale = value.value as LangType
+    locale.value = form.value.locale as LangType
   })
 
   const updateSettings = async () => {
     isPending.value = true
     await api.updateMetaSettings(form.value)
-    await api.getSettings()
     isPending.value = false
-
-    toastShow({
-      text: 'Update project settings',
-      type: 'success'
-    })
   }
+
+  notice.value?.addEventListener('notice', e => {
+    const data = JSON.parse(e.data)
+
+    toastShow(data, async () => {
+      await api.getSettings()
+      form.value = settings.value.meta
+    })
+  })
 </script>
 
 <template>
@@ -98,3 +102,4 @@
     gap: 16px;
   }
 </style>
+../../../core/const

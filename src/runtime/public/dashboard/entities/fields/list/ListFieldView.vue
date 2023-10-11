@@ -1,10 +1,10 @@
 <script lang="ts" setup>
   import { computed, ref, useContently } from '#imports';
   import { SlickList, SlickItem } from 'vue-slicksort'
-  import ModalWindow from '#contently/public/core/modal/ModalWindow.vue';
-  import ButtonControl from '#contently/public/core/ButtonControl.vue';
-  import ControlsGroup from '#contently/public/core/ControlsGroup.vue';
-  import { FieldType } from '#contently/api/types';
+  import ModalWindow from '#runtime/public/ui/modal/ModalWindow.vue';
+  import ButtonControl from '#runtime/public/ui/ButtonControl.vue';
+  import ControlsGroup from '#runtime/public/ui/ControlsGroup.vue';
+  import { FieldType } from '#runtime/api/types';
   import ListFieldItem from './ListFieldItem.vue';
   import { fields } from '..';
   import { nanoid } from 'nanoid';

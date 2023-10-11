@@ -1,7 +1,7 @@
 <script lang="ts" setup>
   import { computed } from '#imports';
-  import InputField from '../../../../../core/InputField.vue';
-  import ModalWindow from '#contently/public/core/modal/ModalWindow.vue';
+  import InputField from '../../../../../ui/InputField.vue';
+  import ModalWindow from '#runtime/public/ui/modal/ModalWindow.vue';
 
   const props = defineProps<{
     modelValue: string;

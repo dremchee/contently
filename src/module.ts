@@ -4,7 +4,6 @@ import {
   defineNuxtModule,
   createResolver,
   addServerPlugin,
-  addServerHandler,
   addPlugin,
   addLayout,
   addImports,
@@ -17,7 +16,7 @@ import {
 
 import { writeFileSync } from "node:fs";
 import { ModuleOptionsEnum, LangType } from "./runtime/api/types";
-import { RouterName, PUBLIC_BASE_URL } from "./runtime/plugins/const";
+import { RouterName, PUBLIC_BASE_URL } from "./runtime/public/core/const";
 
 export const { resolve } = createResolver(import.meta.url);
 
@@ -146,7 +145,7 @@ export default defineNuxtModule<ModuleOptions>({
   },
   async setup(moduleOptions, nuxt) {
     await installModule("@vueuse/nuxt");
-    nuxt.options.alias["#contently"] = `${resolve("./runtime")}`;
+    nuxt.options.alias["#runtime"] = `${resolve("./runtime")}`;
 
     await writeFileSync(
       resolve("./config.json"),
@@ -166,7 +165,7 @@ export default defineNuxtModule<ModuleOptions>({
       {
         name: "useContently",
         as: "useContently",
-        from: resolve("./runtime/plugins/composable"),
+        from: resolve("./runtime/public/core/composable.ts"),
       },
     ]);
     addServerPlugin(resolve("./runtime/server/plugin"));
@@ -176,16 +175,11 @@ export default defineNuxtModule<ModuleOptions>({
       src: resolve("./runtime/contently.d.ts"),
     });
 
-    addPlugin(resolve("./runtime/plugins/api"));
-
-    addServerHandler({
-      route: "/__api/**/*",
-      handler: resolve("./runtime/server/handler"),
-    });
+    addPlugin(resolve("./runtime/plugins/contently"));
 
     addRouteMiddleware({
       name: ModuleOptionsEnum.NAME,
-      path: resolve("./runtime/plugins/middleware"),
+      path: resolve("./runtime/public/core/middleware"),
       global: true,
     });
 

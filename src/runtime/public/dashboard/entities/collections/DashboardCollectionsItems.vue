@@ -6,9 +6,9 @@
   import DashboardHeader from '../../components/DashboardHeader.vue';
   import DashboardCollectionsItem from './components/DashboardCollectionsItem.vue';
   import DashboardCollectionAddForm from './components/DashboardCollectionAddForm.vue';
-  import ButtonControl from '../../../core/ButtonControl.vue';
-  import ModalWindow from '../../../core/modal/ModalWindow.vue';
-  import PreloaderControl from '../../../core/PreloaderControl.vue';
+  import ButtonControl from '../../../ui/ButtonControl.vue';
+  import ModalWindow from '../../../ui/modal/ModalWindow.vue';
+  import PreloaderControl from '../../../ui/PreloaderControl.vue';
 
   const router = useRouter();
   const { api, t } = useContently();
@@ -138,3 +138,4 @@
     margin-top: 16px;
   }
 </style>
+../../../core/const

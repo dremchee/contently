@@ -1,9 +1,9 @@
 <script lang="ts" setup>
   import { computed, ref, useContently } from '#imports';
-  import ControlsGroup from '../../../../core/ControlsGroup.vue';
-  import InputField from '../../../../core/InputField.vue';
-  import ButtonControl from '../../../../core/ButtonControl.vue';
-  import CheckboxControl from '../../../../core/CheckboxControl.vue';
+  import ControlsGroup from '../../../../ui/ControlsGroup.vue';
+  import InputField from '../../../../ui/InputField.vue';
+  import ButtonControl from '../../../../ui/ButtonControl.vue';
+  import CheckboxControl from '../../../../ui/CheckboxControl.vue';
 
   const emit = defineEmits<{
     create: [typeof form.value];

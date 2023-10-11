@@ -1,10 +1,10 @@
 <script lang="ts" setup>
   import { ref, computed, useContently } from '#imports';
   import { useDraggable } from '@vueuse/core';
-  import IconControl from '../../core/IconControl.vue';
-  import TooltipControl from '#contently/public/core/TooltipControl.vue';
-  import DropdownControl from '#contently/public/core/DropdownControl.vue';
-  import { RouterName } from '../../../plugins/const';
+  import IconControl from '../../ui/IconControl.vue';
+  import TooltipControl from '#runtime/public/ui/TooltipControl.vue';
+  import DropdownControl from '#runtime/public/ui/DropdownControl.vue';
+  import { RouterName } from '#runtime/public/core/const'
 
   const { t, breakpoint } = useContently();
 
@@ -193,3 +193,4 @@
     margin-top: auto;
   }
 </style>
+../../core/const

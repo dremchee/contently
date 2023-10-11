@@ -1,13 +1,13 @@
 <script lang="ts" setup>
   import { useContently, useRoute, ref, computed, navigateTo, onMounted } from '#imports';
-  import { useToast } from '#contently/public/core/toast'
+  import { useToast } from '#runtime/public/ui/toast'
   import DashboardMainWrapper from '../../components/DashboardMainWrapper.vue';
   import DashboardHeader from '../../components/DashboardHeader.vue';
-  import DashboardPagePreloader from '#contently/public/dashboard/components/DashboardPagePreloader.vue';
-  import ButtonControl from '../../../core/ButtonControl.vue';
+  import DashboardPagePreloader from '#runtime/public/dashboard/components/DashboardPagePreloader.vue';
+  import ButtonControl from '../../../ui/ButtonControl.vue';
   import { Collection, Collections, DocumentType } from '../../../../api/types';
-  import DashboardContentEditForm from './components/DashboardContentForm.vue'
-  import { RouterName } from '#contently/plugins/const';
+  import DashboardContentForm from './components/DashboardContentForm.vue'
+  import { RouterName } from '#runtime/public/core/const'
 
   const { toastShow } = useToast()
 
@@ -16,6 +16,7 @@
 
   const collection = ref<Partial<DocumentType<Collections>>>({});
   const resource = ref({} as DocumentType<Collection>);
+  const contentForm = ref<InstanceType<typeof DashboardContentForm>>()
   const isUpdating = ref(false)
   const isPending = ref(false)
 
@@ -23,6 +24,8 @@
     published: false,
     content: {} as Record<string, any>
   });
+
+  const isValid = ref(false)
 
   const fetchResource = async () => {
     const response = await api.getCollectionByResourceId(
@@ -41,23 +44,32 @@
   };
 
   const updateContent = async () => {
-    isUpdating.value = true
+    await contentForm.value?.handleSubmit()
 
-    if (collection.value._id) {
-      await api.updateCollectionByResourceId(
-        collection.value._id,
-        resource.value._id,
-        {
-          ...form.value
-        }
-      );
+    if(isValid.value) {
+      isUpdating.value = true
 
-      await fetchResource()
-      isUpdating.value = false
+      if (collection.value._id) {
+        await api.updateCollectionByResourceId(
+          collection.value._id,
+          resource.value._id,
+          {
+            ...form.value
+          }
+        );
 
+        await fetchResource()
+        isUpdating.value = false
+
+        toastShow({
+          message: 'Success update document',
+          type: 'success'
+        })
+      }
+    } else {
       toastShow({
-        text: 'Success update document',
-        type: 'success'
+        message: 'Invalid form',
+        type: 'error'
       })
     }
   };
@@ -74,10 +86,14 @@
       })
 
       toastShow({
-        text: 'Success remove document',
+        message: 'Success remove document',
         type: 'warning'
       })
     }
+  }
+
+  const validateForm = (e: any) => {
+    isValid.value = Boolean(!e)
   }
 
   const title = computed(() => form.value.content[collection.value?.options?.displayField || ''] || collection.value?.name)
@@ -119,18 +135,12 @@
       </DashboardHeader>
     </template>
     <DashboardPagePreloader v-if="isPending" />
-    <DashboardContentEditForm
+    <DashboardContentForm
       v-else
+      ref="contentForm"
       v-model="form"
       :fields="collection?.fields"
+      @validate="validateForm"
     />
   </DashboardMainWrapper>
 </template>
-
-<style scoped>
-  .dashboard-content-edit {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-</style>

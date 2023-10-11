@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-  import DashboardPageLayout from '#contently/public/dashboard/components/DashboardPageLayout.vue'
-  import DashboardSidebar from '#contently/public/dashboard/components/DashboardSidebar.vue';
-  import DashboardFiles from '#contently/public/dashboard/entities/files/DashboardFiles.vue';
+  import DashboardPageLayout from '#runtime/public/dashboard/components/DashboardPageLayout.vue'
+  // import DashboardSidebar from '#runtime/public/dashboard/components/DashboardSidebar.vue';
+  import DashboardFiles from '#runtime/public/dashboard/entities/files/DashboardFiles.vue';
 </script>
 
 <template>

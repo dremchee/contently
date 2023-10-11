@@ -1,7 +1,8 @@
 import { fileService } from "./service";
 import { RouteOptions } from "../../types";
 import { buildResponse, buildResponseError } from "../../utils/helpers";
-import { writeFileSync, existsSync, mkdirSync } from "node:fs";
+import { existsSync } from "node:fs";
+import { writeFile, mkdir } from "node:fs/promises";
 import { extname } from "node:path";
 import { Readable } from "node:stream";
 import { createHash } from "node:crypto";
@@ -26,11 +27,11 @@ const all: RouteOptions = {
     requireAuth: true,
   },
   async handler(event) {
-    const query = getQuery(event) as {
+    const query = getQuery<{
       type?: string;
       limit?: number;
       skip?: number;
-    };
+    }>(event);
 
     const params = {
       type: query.type,
@@ -49,8 +50,10 @@ const findById: RouteOptions = {
   },
   async handler(event) {
     const id = getRouterParam(event, "id");
-    const response = await fileService.findById(String(id));
-
+    if (!id) {
+      return false;
+    }
+    const response = await fileService.findById(id);
     return buildResponse(response);
   },
 };
@@ -63,7 +66,10 @@ const removeById: RouteOptions = {
   },
   async handler(event) {
     const id = getRouterParam(event, "id");
-    const response = await fileService.removeById(String(id));
+    if (!id) {
+      return false;
+    }
+    const response = await fileService.removeById(id);
 
     return buildResponse(response);
   },
@@ -74,6 +80,10 @@ const previewByIdPublic: RouteOptions = {
   method: "get",
   async handler(event) {
     const id = getRouterParam(event, "id");
+
+    if (!id) {
+      return false;
+    }
 
     const schema = z.object({
       width: z
@@ -100,7 +110,7 @@ const previewByIdPublic: RouteOptions = {
       height: query.data.height,
     };
 
-    const assets = await fileService.preview(String(id), {
+    const assets = await fileService.preview(id, {
       resize,
       quality: query.data.quality,
     });
@@ -151,10 +161,10 @@ const upload: RouteOptions = {
           const fileData = await fileService.create(data);
 
           if (!existsSync(uploadsDir)) {
-            await mkdirSync(uploadsDir);
+            await mkdir(uploadsDir);
           }
 
-          await writeFileSync(path, buffer);
+          await writeFile(path, buffer);
 
           return buildResponse(fileData);
         } catch (err) {

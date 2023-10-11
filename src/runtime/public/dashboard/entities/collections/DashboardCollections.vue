@@ -1,14 +1,14 @@
 <script lang="ts" setup>
   import { useContently, ref, onMounted, useRouter } from '#imports';
   import { DocumentType, Collections } from '../../../../api/types';
-  import { RouterName } from '../../../../plugins/const';
-  import DashboardPagePreloader from '#contently/public/dashboard/components/DashboardPagePreloader.vue';
+  import { RouterName } from '#runtime/public/core/const';
+  import DashboardPagePreloader from '#runtime/public/dashboard/components/DashboardPagePreloader.vue';
   import DashboardMainWrapper from '../../components/DashboardMainWrapper.vue';
   import DashboardHeader from '../../components/DashboardHeader.vue';
   import DashboardCollectionsItem from './components/DashboardCollectionsItem.vue';
   import DashboardCollectionAddForm from './components/DashboardCollectionAddForm.vue';
-  import ButtonControl from '#contently/public/core/ButtonControl.vue';
-  import ModalWindow from '../../../core/modal/ModalWindow.vue';
+  import ButtonControl from '#runtime/public/ui/ButtonControl.vue';
+  import ModalWindow from '../../../ui/modal/ModalWindow.vue';
   import { SlickList, SlickItem } from 'vue-slicksort'
 
   const router = useRouter();
@@ -161,3 +161,4 @@
     margin-top: 16px;
   }
 </style>
+../../../core/const

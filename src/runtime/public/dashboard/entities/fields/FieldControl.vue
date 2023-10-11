@@ -1,8 +1,8 @@
 <script lang="ts" setup>
   import { useContently } from '#imports';
   import { DragHandle } from 'vue-slicksort'
-  import IconControl from '#contently/public/core/IconControl.vue';
-  import TooltipControl from '#contently/public/core/TooltipControl.vue';
+  import IconControl from '#runtime/public/ui/IconControl.vue';
+  import TooltipControl from '#runtime/public/ui/TooltipControl.vue';
 
   const { t } = useContently();
   withDefaults(

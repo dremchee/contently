@@ -62,6 +62,11 @@ export enum Status {
   ARCHIVED = "archived",
 }
 
+export type ParamsPagination = {
+  limit: number;
+  skip: number;
+};
+
 export type Collections = {
   /**
    * Unique key
@@ -85,6 +90,10 @@ export type Collections = {
     aliasField?: string;
   };
   readonly items?: DocumentType<Collection>[];
+  /**
+   * If type collection is singleton, also display field: content
+   */
+  readonly content?: DocumentType<Collection>;
   readonly total?: number;
   readonly limit?: number;
   readonly skip?: number;

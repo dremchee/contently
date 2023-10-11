@@ -1,7 +1,7 @@
 <script lang="ts" setup>
   import { ref, computed, useContently } from '#imports';
   import { useDraggable } from '@vueuse/core';
-  import { RouterName } from '#contently/plugins/const';
+  import { RouterName } from '#runtime/plugins/const';
 
   defineProps<{
     items?: {

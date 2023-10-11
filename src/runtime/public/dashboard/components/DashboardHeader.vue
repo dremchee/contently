@@ -1,14 +1,13 @@
 <script lang="ts" setup>
   import { useContently } from '#imports'
-  import IconControl from '#contently/public/core/IconControl.vue';
-  import { headerElement } from '#contently/public/core/editor/editor'
+  import IconControl from '#runtime/public/ui/IconControl.vue';
+
 
   const { breakpoint, isShowSidebar } = useContently()
 </script>
 
 <template>
   <div
-    ref="headerElement"
     :class="$style['header']"
   >
     <div :class="$style['container']">
@@ -20,7 +19,9 @@
         <IconControl name="bar" />
       </div>
       <div :class="$style['title']">
-        <slot name="title" />
+        <div :class="$style['title-text']">
+          <slot name="title" />
+        </div>
       </div>
       <div :class="$style['actions']">
         <slot name="action" />
@@ -42,7 +43,7 @@
   .container {
     display: flex;
     gap: 6px;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
   }
 
   .bar {
@@ -56,11 +57,19 @@
     display: flex;
     align-items: center;
     flex-grow: 1;
+    overflow: hidden;
+  }
+
+  .title-text {
+    width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 
   .actions {
     display: flex;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     gap: 8px;
     align-items: center;
   }

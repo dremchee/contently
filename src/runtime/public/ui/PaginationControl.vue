@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed, ref } from '#imports'
 import { useResizeObserver } from '@vueuse/core'
-import IconControl from '#contently/public/core/IconControl.vue';
+import IconControl from '#runtime/public/ui/IconControl.vue';
 
 const props = withDefaults(defineProps<{
   total: number;

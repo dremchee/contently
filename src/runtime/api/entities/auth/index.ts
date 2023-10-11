@@ -10,6 +10,7 @@ import {
 import { validateBody, Type } from "h3-typebox";
 
 import { setCookie } from "h3";
+import { nanoid } from "nanoid";
 
 const login: RouteOptions = {
   url: "login",
@@ -31,10 +32,12 @@ const login: RouteOptions = {
       if (valid) {
         const payload = exclude(user, ["password"]);
         const token = signToken(payload);
+        const ssid = nanoid(120);
 
         if (token) {
           setCookie(event, "token", token);
-          return buildResponse({ token });
+          setCookie(event, "ssid", ssid);
+          return buildResponse({ token, ssid });
         }
       }
 

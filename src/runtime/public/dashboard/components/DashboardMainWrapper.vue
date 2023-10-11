@@ -1,12 +1,24 @@
 <script lang="ts" setup>
+  import { onMounted, ref } from '#imports';
+import { useHeaderObserver } from '#runtime/public/ui/editor/editor'
   defineProps<{
     fluid?: boolean;
   }>();
+
+  const header = ref<HTMLDivElement>()
+
+  onMounted(() => {
+    const { headerElement } = useHeaderObserver()
+    headerElement.value = header.value
+  })
 </script>
 
 <template>
   <div :class="$style['wrapper']">
-    <div :class="$style['header']">
+    <div
+      ref="header"
+      :class="$style['header']"
+    >
       <slot name="header" />
     </div>
     <div :class="$style['inner']">

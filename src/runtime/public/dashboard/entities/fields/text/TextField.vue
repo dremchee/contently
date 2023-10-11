@@ -1,10 +1,12 @@
 <script lang="ts" setup>
   import { computed } from '#imports';
-  import InputField from '#contently/public/core/InputField.vue';
+  import InputField from '#runtime/public/ui/InputField.vue';
 
   const props = defineProps<{
     modelValue: string;
+    error?: boolean
   }>();
+
   const emit = defineEmits<{
     'update:modelValue': [value: string];
   }>();
@@ -21,7 +23,10 @@
 
 <template>
   <div class="text-field">
-    <InputField v-model="input" />
+    <InputField
+      v-model="input"
+      :error="error"
+    />
   </div>
 </template>
 

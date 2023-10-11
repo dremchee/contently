@@ -1,16 +1,16 @@
 <script lang="ts" setup>
   import { useContently, ref, computed, watch, onMounted } from '#imports';
-  import { useToast } from '#contently/public/core/toast'
-  import { DocumentType, Files, File } from '#contently/api/types'
+  import { useToast } from '#runtime/public/ui/toast'
+  import { DocumentType, Files, File } from '#runtime/api/types'
   import DashboardMainWrapper from '../../components/DashboardMainWrapper.vue';
   import DashboardHeader from '../../components/DashboardHeader.vue';
-  import ButtonControl from '#contently/public/core/ButtonControl.vue'
+  import ButtonControl from '#runtime/public/ui/ButtonControl.vue'
 
   import DashboardFileCard from './DashboardFileCard.vue';
-  import ModalWindow from '#contently/public/core/modal/ModalWindow.vue';
+  import ModalWindow from '#runtime/public/ui/modal/ModalWindow.vue';
   import DashboardFilesItem from './DashboardFilesItem.vue';
-  import PaginationControl from '#contently/public/core/PaginationControl.vue';
-  import SkeletonFiles from '#contently/public/core/skeleton/SkeletonFiles.vue'
+  import PaginationControl from '#runtime/public/ui/PaginationControl.vue';
+  import SkeletonFiles from '#runtime/public/ui/skeleton/SkeletonFiles.vue'
 
   const { api, t } = useContently()
   const { toastShow } = useToast()
@@ -22,7 +22,7 @@
   const isRemoved = ref(false)
 
   const paginate = ref({
-    limit: 20,
+    limit: 50,
     skip: 0
   })
 
@@ -76,12 +76,12 @@
       ;(await files).forEach(file => {
         if(file) {
           toastShow({
-            text: `Success upload file: ${file.data.originName}`,
+            message: `Success upload file: ${file.data.originName}`,
             type: 'success'
           })
         } else {
           toastShow({
-            text: 'This file exist',
+            message: 'This file exist',
             type: 'error'
           })
         }
@@ -101,7 +101,7 @@
     isSelectedFile.value = false
 
     toastShow({
-      text: `This file ${selectedFile.value.originName} removed`,
+      message: `This file ${selectedFile.value.originName} removed`,
       type: 'warning'
     })
     selectedFile.value = {} as DocumentType<File>
@@ -123,7 +123,7 @@
 
     removed.forEach((e) => {
       toastShow({
-        text: `Removed file: ${e.data.originName}`,
+        message: `Removed file: ${e.data.originName}`,
         type: 'warning'
       })
     })

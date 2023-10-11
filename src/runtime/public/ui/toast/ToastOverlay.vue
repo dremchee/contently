@@ -15,7 +15,7 @@
       <ToastControl
         v-for="toast in toasts"
         :key="toast.id"
-        :text="toast.text"
+        :message="toast.message"
         :type="toast.type"
         @close="hideToast(toast.id)"
       />

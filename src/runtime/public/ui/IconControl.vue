@@ -22,6 +22,7 @@
 <template>
   <div
     v-if="icon"
+    :name="name"
     class="icon-control"
     v-html="icon"
   />

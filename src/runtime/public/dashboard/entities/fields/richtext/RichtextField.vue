@@ -1,7 +1,7 @@
 <script lang="ts" setup>
   import { computed } from '#imports';
-  import EditorControl from '#contently/public/core/editor/EditorControl.vue';
-  import type { EditorModelValue } from '#contently/public/core/editor/editor';
+  import EditorControl from '#runtime/public/ui/editor/EditorControl.vue';
+  import type { EditorModelValue } from '#runtime/public/ui/editor/editor';
 
   const props = defineProps<{
     modelValue: EditorModelValue;

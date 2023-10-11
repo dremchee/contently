@@ -1,6 +1,6 @@
-import { defineNuxtPlugin } from "#imports";
 import { useApiFetch } from "./http";
 import { useContently } from "#imports";
+import { useNotification } from "../core/notification";
 
 import {
   Settings,
@@ -11,7 +11,7 @@ import {
   File,
   Files,
   LangType,
-} from "../api/types";
+} from "../../api/types";
 
 export class ContentlyApi {
   async init() {
@@ -25,8 +25,12 @@ export class ContentlyApi {
       }
     }
 
-    if (!settings.value && !collections.value) {
-      await Promise.all([this.getSettings(), this.getCollections()]);
+    if (isAuth.value && !settings.value && !collections.value) {
+      await Promise.all([
+        this.getSettings(),
+        this.getCollections(),
+        this.notification(),
+      ]);
     }
   }
   async getSettings() {
@@ -72,9 +76,6 @@ export class ContentlyApi {
       body,
     });
 
-    if (data.value?.data) {
-      await this.auth();
-    }
     return data.value;
   }
   // Collections
@@ -279,12 +280,8 @@ export class ContentlyApi {
 
     return data.value;
   }
+  async notification() {
+    const { init } = useNotification();
+    return await init();
+  }
 }
-
-export default defineNuxtPlugin(() => {
-  return {
-    provide: {
-      contently: new ContentlyApi(),
-    },
-  };
-});

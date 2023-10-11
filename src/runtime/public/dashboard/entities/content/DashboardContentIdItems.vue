@@ -1,15 +1,15 @@
 <script lang="ts" setup>
   import { useContently, useRoute, useRouter, ref, watch, navigateTo, onMounted, useNuxtData } from '#imports';
-  import { DocumentType, Collections, Collection } from '#contently/api/types'
-  import { RouterName } from './../../../../plugins/const';
+  import { DocumentType, Collections, Collection } from '#runtime/api/types'
+  import { RouterName } from '#runtime/public/core/const';
   import DashboardMainWrapper from '../../components/DashboardMainWrapper.vue';
   import DashboardHeader from '../../components/DashboardHeader.vue';
-  import ButtonControl from '../../../core/ButtonControl.vue';
-  import DashboardPagePreloader from '#contently/public/dashboard/components/DashboardPagePreloader.vue';
+  import ButtonControl from '../../../ui/ButtonControl.vue';
+  import DashboardPagePreloader from '#runtime/public/dashboard/components/DashboardPagePreloader.vue';
   import DashboardContentItem from './components/DashboardContentItem.vue';
   import DashboardContentForm from './components/DashboardContentForm.vue';
-  import PaginationControl from '#contently/public/core/PaginationControl.vue';
-  import ModalWindow from '#contently/public/core/modal/ModalWindow.vue';
+  import PaginationControl from '#runtime/public/ui/PaginationControl.vue';
+  import ModalWindow from '#runtime/public/ui/modal/ModalWindow.vue';
   import { SlickList, SlickItem } from 'vue-slicksort'
 
   const route = useRoute();
@@ -75,8 +75,13 @@
 
   const sortUpdate = async (e: { event: MouseEvent, newIndex: number, oldIndex: number}) => {
     const id = collection.value._id
+
+    if(!collection.value.items?.[e.oldIndex]._id) {
+      return
+    }
+
     const data = {
-      id: collection.value.items[e.oldIndex]._id,
+      id: collection.value.items?.[e.oldIndex]._id,
       from: e.oldIndex + paginate.value.skip,
       to: e.newIndex + paginate.value.skip,
     }
@@ -108,7 +113,7 @@
     navigateTo({
       name: RouterName.CONTENT_EDIT,
       params: {
-        resource: collection.value.items[0]._id,
+        resource: collection.value.items?.[0]._id,
       },
     })
   }
@@ -208,3 +213,4 @@
     box-shadow: var(--box-shadow-large);
   }
 </style>
+../../../core/const

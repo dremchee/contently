@@ -1,9 +1,9 @@
 <script lang="ts" setup>
   import { ref, useContently } from '#imports'
   import { useTimeAgo } from '@vueuse/core';
-  import IconControl from '#contently/public/core/IconControl.vue';
+  import IconControl from '#runtime/public/ui/IconControl.vue';
   import { DragHandle } from 'vue-slicksort'
-  import DropdownControl from '#contently/public/core/DropdownControl.vue';
+  import DropdownControl from '#runtime/public/ui/DropdownControl.vue';
 
   defineProps<{
     label: string;

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import { computed } from '#imports';
-  import TextareaField from '#contently/public/core/TextareaField.vue';
+  import TextareaField from '#runtime/public/ui/TextareaField.vue';
 
   const props = defineProps<{
     modelValue: string;

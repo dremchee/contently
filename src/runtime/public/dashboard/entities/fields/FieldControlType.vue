@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import { useContently } from '#imports';
-  import IconControl from '#contently/public/core/IconControl.vue';
+  import IconControl from '#runtime/public/ui/IconControl.vue';
 
   const { t } = useContently();
 

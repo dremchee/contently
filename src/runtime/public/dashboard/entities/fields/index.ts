@@ -1,5 +1,6 @@
 import { defineAsyncComponent, useContently } from "#imports";
-import { FieldType } from "../../../../api/types";
+import { FieldType, Field } from "#runtime/api/types";
+import { ZodArray, SafeParseReturnType, ZodObject, ZodString, z } from "zod";
 
 const { t } = useContently();
 
@@ -16,64 +17,100 @@ export const fields = [
   {
     icon: "text",
     type: FieldType.TEXT,
-    name: String(t("textField")),
+    schema: z.string(),
+    defaultValue: "",
+    name: t("textField"),
     view: defineAsyncComponent(() => import("./text/TextField.vue")),
   },
   {
     icon: "text-wrap",
     type: FieldType.TEXTAREA,
-    name: String(t("textFieldMultiline")),
+    schema: z.string(),
+    defaultValue: "",
+    name: t("textFieldMultiline"),
     view: defineAsyncComponent(() => import("./textarea/TextareaField.vue")),
   },
   {
     icon: "draft-line",
     type: FieldType.RICHTEXT,
-    name: String(t("textEditor")),
+    schema: z.object({}),
+    defaultValue: {},
+    name: t("textEditor"),
     view: defineAsyncComponent(() => import("./richtext/RichtextField.vue")),
   },
   {
     icon: "list",
     type: FieldType.LIST,
-    name: String(t("list")),
+    name: t("list"),
+    schema: z.object({}),
+    defaultValue: {},
     view: defineAsyncComponent(() => import("./list/ListFieldView.vue")),
     edit: defineAsyncComponent(() => import("./list/ListFieldEdit.vue")),
   },
   {
     icon: "calendar",
     type: FieldType.DATE,
-    name: String(t("date")),
+    name: t("date"),
+    schema: z.string(),
+    defaultValue: "",
     view: defineAsyncComponent(() => import("./text/TextField.vue")),
   },
   {
     icon: "calculator",
     type: FieldType.NUMBER,
-    name: String(t("number")),
+    name: t("number"),
+    schema: z.string(),
+    defaultValue: "",
     view: defineAsyncComponent(() => import("./text/TextField.vue")),
   },
   {
     icon: "checkbox",
     type: FieldType.BOOLEAN,
-    name: String(t("boolean")),
+    name: t("boolean"),
+    schema: z.boolean(),
+    defaultValue: "",
     view: defineAsyncComponent(() => import("./text/TextField.vue")),
   },
   {
     icon: "tag",
     type: FieldType.TAG,
-    name: String(t("tags")),
+    name: t("tags"),
+    schema: z.string(),
+    defaultValue: "",
     view: defineAsyncComponent(() => import("./text/TextField.vue")),
   },
   {
     icon: "file-image",
     type: FieldType.MEDIA,
-    name: String(t("media")),
+    name: t("media"),
+    schema: z.string(),
+    defaultValue: "",
     view: defineAsyncComponent(() => import("./media/MediaFieldView.vue")),
     edit: defineAsyncComponent(() => import("./media/MediaFieldEdit.vue")),
   },
   {
     icon: "key",
     type: FieldType.KEY,
-    name: String(t("key")),
+    name: t("key"),
     view: defineAsyncComponent(() => import("./key/KeyFieldView.vue")),
     edit: defineAsyncComponent(() => import("./key/KeyFieldEdit.vue")),
   },
 ];
+
+export const validateFieldsSchema = (fieldList: Field[]) => {
+  return fieldList.reduce((schema, def) => {
+    const field = fields.find((e) => e.type === def.type);
+    let fieldSchema = field?.schema;
+
+    if (def.options.required) {
+      if (fieldSchema instanceof ZodString) {
+        fieldSchema = fieldSchema.nonempty();
+      }
+      if (fieldSchema instanceof ZodObject) {
+        fieldSchema = fieldSchema.required();
+      }
+    }
+
+    return schema.setKey(def.key, fieldSchema || z.unknown());
+  }, z.object({}));
+};

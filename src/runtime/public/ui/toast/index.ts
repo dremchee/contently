@@ -2,8 +2,8 @@ import { ref } from "#imports";
 import { nanoid } from "nanoid";
 
 export type ToastProps = {
-  text: string;
   type?: ToastTypes;
+  message: string;
 };
 
 export type ToastTypes = "success" | "default" | "error" | "warning";
@@ -24,7 +24,7 @@ export const useToast = () => {
     }
   };
 
-  const toastShow = (data: ToastProps) => {
+  const toastShow = (data: ToastProps, callback?: () => void) => {
     const toast = {
       id: nanoid(),
       type: data.type ? data.type : "default",
@@ -32,6 +32,7 @@ export const useToast = () => {
     };
 
     toasts.value.push(toast);
+    callback && callback();
 
     setTimeout(() => {
       hideToast(toast.id);

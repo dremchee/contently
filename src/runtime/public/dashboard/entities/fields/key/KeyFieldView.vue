@@ -1,7 +1,7 @@
 <script lang="ts" setup>
   import { computed, onMounted } from '#imports';
-  import { Field, FieldType } from '#contently/api/types';
-  import InputField from '#contently/public/core/InputField.vue';
+  import { Field, FieldType } from '#runtime/api/types';
+  import InputField from '#runtime/public/ui/InputField.vue';
   import { nanoid } from 'nanoid';
   import { KeyFieldData } from './types';
 

@@ -1,4 +1,4 @@
-import { LangType } from "../api/types";
+import { LangType } from "../../api/types";
 
 export const PUBLIC_BASE_URL = "admin";
 export const API_BASE_URL = "/__api/";

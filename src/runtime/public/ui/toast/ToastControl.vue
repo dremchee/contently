@@ -5,7 +5,7 @@
   const { breakpoint } = useContently()
 
   const props = withDefaults(defineProps<{
-    text: string;
+    message: string;
     type: ToastTypes
   }>(), {
     type: 'default'
@@ -39,7 +39,7 @@
       <div
         :class="$style['text']"
       >
-        <span v-html="text" />
+        <span v-html="message" />
       </div>
       <div
         :class="$style['close']"

@@ -1,9 +1,15 @@
 <script lang="ts" setup>
-  import { computed, useContently } from '#imports';
+  import { computed, useNuxtApp } from '#imports';
 
-  const { api } = useContently();
-  const { data } = await api.getCollectionByKey('home');
-  const content = computed(() => data?.items[0].content)
+  const { $contently } = useNuxtApp()
+  const { data: home } = await $contently.readSingleCollection('home')
+  const { data: blog } = await $contently.readSingleCollection('blog')
+
+  console.log(blog);
+
+
+
+  const homeData = computed(() => home?.content)
 </script>
 
 <template>
@@ -12,16 +18,16 @@
       <div class="masthead-content">
         <div class="container px-5">
           <h1 class="masthead-heading mb-0">
-            {{ content?.title }}
+            {{ homeData?.title }}
           </h1>
           <h2 class="masthead-subheading mb-0">
-            {{ content?.description }}
+            {{ homeData?.description }}
           </h2>
           <a
             class="btn btn-primary btn-xl rounded-pill mt-5"
             href="#scroll"
           >
-            {{ content?.button }}
+            {{ homeData?.button }}
           </a>
         </div>
       </div>
@@ -31,12 +37,12 @@
       <div class="bg-circle-4 bg-circle" />
     </header>
     <div
-      v-if="content?.content"
-      v-html="content?.content.html"
+      v-if="homeData?.content"
+      v-html="homeData?.content.html"
     />
     <section id="scroll">
       <div
-        v-for="(fact, index) in content?.facts"
+        v-for="(fact, index) in homeData?.facts"
         :key="fact.id"
         class="container px-5"
       >
@@ -67,7 +73,7 @@
     <section>
       <div class="container p-5">
         <div class="row gx-5 align-items-center">
-          <p>{{ content?.introtext }}</p>
+          <p>{{ homeData?.introtext }}</p>
         </div>
       </div>
     </section>

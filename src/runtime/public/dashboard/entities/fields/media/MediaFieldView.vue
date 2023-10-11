@@ -1,12 +1,12 @@
 <script lang="ts" setup>
   import { computed, ref, useContently } from '#imports';
-  import { DocumentType, Files, File } from '#contently/api/types'
-  import ModalWindow from '#contently/public/core/modal/ModalWindow.vue';
-  import UploadControl from '#contently/public/core/UploadControl.vue';
-  import PreviewFileControl from '#contently/public/core/PreviewFileControl.vue';
-  import DashboardFileCard from '#contently/public/dashboard/entities/files/DashboardFileCard.vue';
-  import ButtonControl from '#contently/public/core/ButtonControl.vue';
-  import DashboardUploadFiles from '#contently/public/dashboard/entities/files/DashboardUploadFiles.vue';
+  import { DocumentType, Files, File } from '#runtime/api/types'
+  import ModalWindow from '#runtime/public/ui/modal/ModalWindow.vue';
+  import UploadControl from '#runtime/public/ui/UploadControl.vue';
+  import PreviewFileControl from '#runtime/public/ui/PreviewFileControl.vue';
+  import DashboardFileCard from '#runtime/public/dashboard/entities/files/DashboardFileCard.vue';
+  import ButtonControl from '#runtime/public/ui/ButtonControl.vue';
+  import DashboardUploadFiles from '#runtime/public/dashboard/entities/files/DashboardUploadFiles.vue';
 
   const { api } = useContently()
 
