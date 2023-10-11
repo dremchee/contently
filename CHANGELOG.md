@@ -1,4 +1,17 @@
 
+## v0.0.6
+
+[compare changes](https://github.com/dremchee/nuxt-contently/compare/v0.0.5...v0.0.6)
+
+### 🏡 Chore
+
+- Update editor ([b21ffd0](https://github.com/dremchee/nuxt-contently/commit/b21ffd0))
+- Move files and sse ([9c25353](https://github.com/dremchee/nuxt-contently/commit/9c25353))
+
+### ❤️ Contributors
+
+- Dremchee ([@dremchee](http://github.com/dremchee))
+
 ## v0.0.5
 
 [compare changes](https://github.com/dremchee/nuxt-contently/compare/v0.0.4...v0.0.5)
