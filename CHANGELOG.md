@@ -1,4 +1,16 @@
 
+## v0.0.7
+
+[compare changes](https://github.com/dremchee/nuxt-contently/compare/v0.0.6...v0.0.7)
+
+### 🩹 Fixes
+
+- Remove ext in module ([6173821](https://github.com/dremchee/nuxt-contently/commit/6173821))
+
+### ❤️ Contributors
+
+- Dremchee ([@dremchee](http://github.com/dremchee))
+
 ## v0.0.6
 
 [compare changes](https://github.com/dremchee/nuxt-contently/compare/v0.0.5...v0.0.6)
