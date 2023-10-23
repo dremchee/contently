@@ -1,4 +1,31 @@
 
+## v0.0.9
+
+[compare changes](https://github.com/dremchee/nuxt-contently/compare/v0.0.8...v0.0.9)
+
+### 🚀 Enhancements
+
+- Update client api ([c587f2a](https://github.com/dremchee/nuxt-contently/commit/c587f2a))
+- Update sse hook ([051a4c8](https://github.com/dremchee/nuxt-contently/commit/051a4c8))
+- **ui:** Add radio button control ([63e446f](https://github.com/dremchee/nuxt-contently/commit/63e446f))
+- **ui:** Add tag control ([e761c01](https://github.com/dremchee/nuxt-contently/commit/e761c01))
+- **ui:** Prepare uploader ([7735daf](https://github.com/dremchee/nuxt-contently/commit/7735daf))
+
+### 🩹 Fixes
+
+- Redirect bafore login ([214c795](https://github.com/dremchee/nuxt-contently/commit/214c795))
+- **ui:** Transition modal window ([1442e85](https://github.com/dremchee/nuxt-contently/commit/1442e85))
+
+### 🏡 Chore
+
+- Refine types ([83f6177](https://github.com/dremchee/nuxt-contently/commit/83f6177))
+- Bump nuxt version ([1eb1218](https://github.com/dremchee/nuxt-contently/commit/1eb1218))
+- Prepare generate types ([388de47](https://github.com/dremchee/nuxt-contently/commit/388de47))
+
+### ❤️ Contributors
+
+- Dremchee ([@dremchee](http://github.com/dremchee))
+
 ## v0.0.8
 
 [compare changes](https://github.com/dremchee/nuxt-contently/compare/v0.0.7...v0.0.8)

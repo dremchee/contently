@@ -1,6 +1,6 @@
 {
   "name": "nuxt-contently",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Headless CMS for Nuxt",
   "repository": "https://github.com/dremchee/nuxt-contently",
   "license": "MIT",
