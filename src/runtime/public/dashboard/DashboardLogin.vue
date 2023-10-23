@@ -17,8 +17,8 @@
 
     if (user?.data) {
       navigateTo({
-        name: RouterName.CONTENT,
-      });
+        name: RouterName.INDEX,
+      })
     }
   };
 </script>
