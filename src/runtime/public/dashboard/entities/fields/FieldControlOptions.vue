@@ -7,7 +7,7 @@
   import CheckboxControl from '#runtime/public/ui/CheckboxControl.vue';
   import FieldControlItem from './FieldControlItem.vue';
   import { fields } from '.';
-  import { Field, FieldType } from '#runtime/api/types';
+  import type { Field, FieldType } from '#runtime/api/types';
 
   const { t } = useContently();
 

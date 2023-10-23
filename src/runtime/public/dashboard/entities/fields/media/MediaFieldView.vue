@@ -1,12 +1,13 @@
 <script lang="ts" setup>
   import { computed, ref, useContently } from '#imports';
-  import { DocumentType, Files, File } from '#runtime/api/types'
+  import type { DocumentType, Files, File } from '#runtime/api/types'
   import ModalWindow from '#runtime/public/ui/modal/ModalWindow.vue';
   import UploadControl from '#runtime/public/ui/UploadControl.vue';
   import PreviewFileControl from '#runtime/public/ui/PreviewFileControl.vue';
   import DashboardFileCard from '#runtime/public/dashboard/entities/files/DashboardFileCard.vue';
   import ButtonControl from '#runtime/public/ui/ButtonControl.vue';
   import DashboardUploadFiles from '#runtime/public/dashboard/entities/files/DashboardUploadFiles.vue';
+  import DashboardUploader from '#runtime/public/dashboard/entities/files/DashboardUploader.vue';
 
   const { api } = useContently()
 
@@ -72,7 +73,7 @@
       v-if="!input"
       class="media-field__upload"
     >
-      <UploadControl
+      <DashboardUploader
         @upload="uploadFile"
         @choose="chooseFile"
       />
