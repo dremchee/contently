@@ -1,4 +1,4 @@
-import { RouteOptions, Settings } from "../../types";
+import type { RouteOptions, Settings } from "../../types";
 import { settingsService } from "./service";
 import { buildResponse, buildResponseError } from "../../utils/helpers";
 import { writeFileSync } from "node:fs";
@@ -15,7 +15,14 @@ import {
   getCookie,
 } from "h3";
 
-import { sseHooks, sendSourceEvent } from "../../../server/hooks";
+import {
+  sseHooks,
+  sendSourceEvent,
+  sseHookEvent,
+  SSEEventName,
+  sseHookHandler,
+  SSEMethodName,
+} from "../../../server/hooks";
 
 const init: RouteOptions = {
   url: "settings",
@@ -32,15 +39,13 @@ const updateMeta: RouteOptions = {
     requireAuth: true,
   },
   async handler(event) {
-    const ssid = await getCookie(event, "ssid");
     const body = await readBody<Partial<Settings["meta"]>>(event);
     const data = await settingsService.updateSettingsMeta(body);
 
     if (data) {
-      sseHooks.callHook("sse:notice", {
-        type: "success",
-        message: "Update project settings",
-        key: ssid,
+      sseHookHandler(event, SSEEventName.NOTICE, {
+        method: SSEMethodName.UPDATE_META,
+        data,
       });
     }
 
@@ -82,10 +87,7 @@ const notification: RouteOptions = {
     });
 
     setResponseStatus(event, 200);
-
-    sseHooks.hook("sse:notice", (payload) =>
-      sendSourceEvent(event, "notice", payload)
-    );
+    sseHookEvent(event, SSEEventName.NOTICE);
 
     event._handled = true;
   },
