@@ -55,6 +55,7 @@
     "sass": "^1.64.0",
     "sharp": "^0.32.3",
     "sortablejs": "^1.15.0",
+    "typescript": "^5.2.2",
     "vue-slicksort": "^2.0.5",
     "zod": "^3.22.2"
   },
@@ -72,7 +73,7 @@
     "@types/sharp": "^0.32.0",
     "changelogen": "^0.5.4",
     "eslint": "^8.45.0",
-    "nuxt": "^3.7.4",
+    "nuxt": "^3.8.0",
     "vitest": "^0.33.0"
   }
 }
