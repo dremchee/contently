@@ -1,13 +1,17 @@
 <script lang="ts" setup>
-  import { computed } from '#imports';
+  import { computed, ref, watch } from '#imports';
   import IconControl from '../IconControl.vue';
 
-  const props = defineProps<{
+  const props = withDefaults(defineProps<{
     modelValue: boolean;
     title?: string;
     size?: 'small' | 'normal' | 'large'
     direction?: 'center' | 'sidebar' | 'menu'
-  }>();
+  }>(), {
+    direction: 'center',
+    size: 'normal',
+    title: ''
+  });
 
   const emit = defineEmits<{
     'update:modelValue': [value: boolean];
@@ -19,6 +23,8 @@
     emit('update:modelValue', false);
   };
 
+  const isShowModal = ref(props.modelValue)
+
   const classList = computed(() => {
     return [
       props.size && `is-${props.size}`,
@@ -26,21 +32,34 @@
       props.size && `is-${props.size}`
     ]
   })
+
+  watch(() => props.modelValue, value => {
+    if(value) {
+      isShowModal.value = value
+    }
+  })
+
+  const hideModal = () => {
+    isShowModal.value = false
+  }
 </script>
 
 <template>
   <Teleport
-    v-if="modelValue"
+    v-if="isShowModal"
     to="#modal"
   >
     <Transition
       appear
       name="dialog"
+      @after-leave="hideModal"
     >
       <dialog
+        v-show="modelValue"
         open
         class="modal-control"
         :class="classList"
+        :data-direction="direction"
       >
         <div class="modal-control__header">
           <div class="modal-control__header-title">
@@ -66,12 +85,23 @@
 <style>
   .dialog-enter-active,
   .dialog-leave-active {
-    transition: .2s all ease;
+    transition: .2s cubic-bezier(0.77, 0, 0.175, 1);
   }
 
   .dialog-enter-from,
   .dialog-leave-to {
-    opacity: 0;
+    &[data-direction="center"] {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+
+    &[data-direction="menu"] {
+      transform: translateX(-100%);
+    }
+
+    &[data-direction="sidebar"] {
+      transform: translateX(100%);
+    }
   }
 </style>
 
