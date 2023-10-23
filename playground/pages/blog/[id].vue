@@ -1,17 +1,16 @@
 <script lang="ts" setup>
   import { useRoute } from '#app';
-  import { useContently } from '#imports';
+  import { useNuxtApp } from '#imports';
 
+  const { $contently } = useNuxtApp()
   const route = useRoute();
-  const { api } = useContently();
-
-  const response = await api.getCollectionByKeyResource('blog', String(route.params.id));
+  const { data: post } = await $contently.readCollectionItem('blog', String(route.params.id))
 </script>
 
 <template>
-  <div>
-    <h1>{{ response.data?.name }}</h1>
+  <div v-if="post">
+    <h1>{{ post?.content?.title }}</h1>
 
-    <pre>{{ response.data?.content?.title }}</pre>
+    <div v-html="post?.content?.content.html" />
   </div>
 </template>

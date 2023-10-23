@@ -1,6 +1,6 @@
 import { useApiFetch } from "./http";
 
-import {
+import type {
   Settings,
   User,
   DocumentType,
@@ -29,6 +29,14 @@ export class ClientApi {
       {
         query: options,
       }
+    );
+
+    return data.value;
+  }
+
+  async readCollectionItem(key: string, id: string) {
+    const { data } = await useApiFetch<DocumentType<Collections>>(
+      `public/collections/${key}/resource/${id}`
     );
 
     return data.value;

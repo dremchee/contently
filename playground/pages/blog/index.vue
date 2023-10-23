@@ -1,30 +1,28 @@
 <script lang="ts" setup>
-  import { useContently } from '#imports';
+  import { computed, useNuxtApp } from '#imports';
 
-  const { api } = useContently();
-
-  const response = await api.getCollectionByKey('blog');
+  const { $contently } = useNuxtApp()
+  const { data: blog } = await $contently.readCollection('blog')
 </script>
 
 <template>
   <div>
-    <h1>{{ response.data?.name }}</h1>
+    <h1>{{ blog?.name }}</h1>
 
     <div>
       <ul>
         <li
-          v-for="item in response.data?.items"
+          v-for="item in blog?.items"
           :key="item._id"
         >
           <NuxtLink
             :to="`/blog/${item.key}`"
             append
           >
-            {{ item.name }}
+            {{ item.content.title }}
           </NuxtLink>
         </li>
       </ul>
-      <pre>{{ response.data }}</pre>
     </div>
   </div>
 </template>

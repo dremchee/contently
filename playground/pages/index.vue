@@ -3,11 +3,6 @@
 
   const { $contently } = useNuxtApp()
   const { data: home } = await $contently.readSingleCollection('home')
-  const { data: blog } = await $contently.readSingleCollection('blog')
-
-  console.log(blog);
-
-
 
   const homeData = computed(() => home?.content)
 </script>
