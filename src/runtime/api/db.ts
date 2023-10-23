@@ -1,7 +1,7 @@
 import Datastore from "@seald-io/nedb";
 import { resolve } from "path";
 import { config } from "./const";
-import { ModuleOptions } from "../../module";
+import type { ModuleOptions } from "../../module";
 
 export class Database {
   readonly storage: Datastore;

@@ -1,5 +1,6 @@
 import { createHash } from "../../utils/helpers";
-import { User, Role } from "../../types";
+import type { User } from "../../types";
+import { Role } from "../../types";
 import { ApiService } from "../../api";
 
 class UserService extends ApiService {

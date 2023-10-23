@@ -2,7 +2,7 @@ import { useApiFetch } from "./http";
 import { useContently } from "#imports";
 import { useNotification } from "../core/notification";
 
-import {
+import type {
   Settings,
   User,
   DocumentType,
@@ -58,11 +58,6 @@ export class ContentlyApi {
   async auth() {
     const { data } = await useApiFetch<DocumentType<User>>("auth");
 
-    // if (data.value?.data) {
-    //   useContently().isAuth.value = true;
-    //   useContently().user.value = data.value?.data;
-    // }
-
     return data.value;
   }
   async getUsers() {
@@ -71,10 +66,16 @@ export class ContentlyApi {
     return data.value;
   }
   async loginUser(body: { email: string; password: string }) {
+    const { isAuth, user } = useContently();
     const { data } = await useApiFetch<DocumentType<User>>("login", {
       method: "POST",
       body,
     });
+
+    if (data.value.data) {
+      user.value = data.value.data;
+      isAuth.value = true;
+    }
 
     return data.value;
   }

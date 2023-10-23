@@ -1,4 +1,4 @@
-import { RouteOptions } from "../../types";
+import type { RouteOptions } from "../../types";
 import { userService } from "../users/service";
 import {
   buildResponse,

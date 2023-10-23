@@ -14,7 +14,7 @@
   import CollapseControl from '#runtime/public/ui/CollapseControl.vue';
 
   import ButtonControl from '../../../ui/ButtonControl.vue';
-  import { DocumentType, Collections, Field, FieldType } from '../../../../api/types';
+  import type { DocumentType, Collections, Field, FieldType } from '#runtime/api/types';
   import { fields } from '#runtime/public/dashboard/entities/fields';
   import { RouterName } from '#runtime/public/core/const'
   import CheckboxControl from '#runtime/public/ui/CheckboxControl.vue';
@@ -343,3 +343,4 @@
     gap: 16px;
   }
 </style>
+#runtime/api/types

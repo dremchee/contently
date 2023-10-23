@@ -1,9 +1,10 @@
 <script lang="ts" setup>
   import { computed, onMounted } from '#imports';
-  import { Field, FieldType } from '#runtime/api/types';
+  import type { Field } from '#runtime/api/types';
+  import { FieldType } from '#runtime/api/types';
   import InputField from '#runtime/public/ui/InputField.vue';
   import { nanoid } from 'nanoid';
-  import { KeyFieldData } from './types';
+  import type { KeyFieldData } from './types';
 
   const props = defineProps<{
     modelValue: string;

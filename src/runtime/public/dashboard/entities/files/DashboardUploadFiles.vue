@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import { computed, ref, useContently, watch } from '#imports';
-  import { DocumentType, Files, File } from '#runtime/api/types'
+  import type { DocumentType, Files, File } from '#runtime/api/types'
   import ModalWindow from '#runtime/public/ui/modal/ModalWindow.vue';
   import DashboardFileCard from './DashboardFileCard.vue';
 

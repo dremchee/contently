@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import { useContently, computed } from '#imports';
-  import { DocumentType, File } from '#runtime/api/types'
+  import type { DocumentType, File } from '#runtime/api/types'
   import PreviewFileControl from '#runtime/public/ui/PreviewFileControl.vue';
 
   const emit = defineEmits<{

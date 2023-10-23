@@ -1,7 +1,7 @@
 <script lang="ts" setup>
   import { useContently, ref, onMounted, useRouter } from '#imports';
-  import { DocumentType, Collections } from '../../../../api/types';
-  import { RouterName } from '../../../../plugins/const';
+  import type { DocumentType, Collections } from '#runtime/api/types';
+  import { RouterName } from '#runtime/public/core/const';
   import DashboardMainWrapper from '../../components/DashboardMainWrapper.vue';
   import DashboardHeader from '../../components/DashboardHeader.vue';
   import DashboardCollectionsItem from './components/DashboardCollectionsItem.vue';
@@ -138,4 +138,4 @@
     margin-top: 16px;
   }
 </style>
-../../../core/const
+#runtime/api/types

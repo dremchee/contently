@@ -1,4 +1,4 @@
-import { RouteOptions } from "../../types";
+import type { RouteOptions } from "../../types";
 import { userService } from "./service";
 import { buildResponse, exclude } from "../../utils/helpers";
 import { validateBody, validateQuery, Type } from "h3-typebox";

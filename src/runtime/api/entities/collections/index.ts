@@ -1,4 +1,4 @@
-import { Collections, RouteOptions } from "../../types";
+import type { Collections, RouteOptions } from "../../types";
 import { collectionService } from "./service";
 import { buildResponse, buildResponseError } from "../../utils/helpers";
 import { getRouterParam, getQuery, readBody } from "h3";
@@ -223,6 +223,7 @@ const updateByResourceId: RouteOptions = {
       resourceId,
       data
     );
+
     return buildResponse(result);
   },
 };

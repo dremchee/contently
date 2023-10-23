@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import { useContently, ref, onMounted, useRouter } from '#imports';
-  import { DocumentType, Collections } from '../../../../api/types';
+  import type { DocumentType, Collections } from '#runtime/api/types';
   import { RouterName } from '#runtime/public/core/const';
   import DashboardPagePreloader from '#runtime/public/dashboard/components/DashboardPagePreloader.vue';
   import DashboardMainWrapper from '../../components/DashboardMainWrapper.vue';
@@ -161,4 +161,4 @@
     margin-top: 16px;
   }
 </style>
-../../../core/const
+#runtime/api/types

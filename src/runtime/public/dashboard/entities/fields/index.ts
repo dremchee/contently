@@ -1,6 +1,7 @@
 import { defineAsyncComponent, useContently } from "#imports";
-import { FieldType, Field } from "#runtime/api/types";
-import { ZodArray, SafeParseReturnType, ZodObject, ZodString, z } from "zod";
+import type { Field } from "#runtime/api/types";
+import { FieldType } from "#runtime/api/types";
+import { ZodObject, ZodString, z } from "zod";
 
 const { t } = useContently();
 
@@ -104,7 +105,7 @@ export const validateFieldsSchema = (fieldList: Field[]) => {
 
     if (def.options.required) {
       if (fieldSchema instanceof ZodString) {
-        fieldSchema = fieldSchema.nonempty();
+        fieldSchema = fieldSchema.min(1);
       }
       if (fieldSchema instanceof ZodObject) {
         fieldSchema = fieldSchema.required();

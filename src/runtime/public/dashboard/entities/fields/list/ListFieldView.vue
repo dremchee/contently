@@ -4,7 +4,7 @@
   import ModalWindow from '#runtime/public/ui/modal/ModalWindow.vue';
   import ButtonControl from '#runtime/public/ui/ButtonControl.vue';
   import ControlsGroup from '#runtime/public/ui/ControlsGroup.vue';
-  import { FieldType } from '#runtime/api/types';
+  import type { FieldType } from '#runtime/api/types';
   import ListFieldItem from './ListFieldItem.vue';
   import { fields } from '..';
   import { nanoid } from 'nanoid';
@@ -160,4 +160,3 @@
     padding: 4px 0;
   }
 </style>
-../../../../../api/types

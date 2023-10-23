@@ -2,7 +2,7 @@
   import { watch, ref, computed, onMounted } from '#imports';
   import ControlsGroup from '#runtime/public/ui/ControlsGroup.vue';
   import { fields as fieldList, validateFieldsSchema } from '#runtime/public/dashboard/entities/fields'
-  import { Field } from '#runtime/api/types';
+  import type { Field } from '#runtime/api/types';
   import { z } from "zod";
 
   const props = defineProps<{
@@ -47,6 +47,18 @@
 
   watch(form.value, (value) => {
     emit('update:modelValue', value);
+  })
+
+  onMounted(() => {
+    if(props.fields && props.modelValue.content) {
+      props.fields.forEach(e => {
+        if(!props.modelValue.content[e.key]) {
+          const field = fieldList.find(f => f.type === e.type)
+          form.value.content[e.key] = field?.defaultValue
+        }
+
+      })
+    }
   })
 
   defineExpose({ form, handleSubmit });

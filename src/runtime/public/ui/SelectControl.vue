@@ -97,6 +97,7 @@
     display: flex;
     align-items: center;
     border: 1px solid var(--color-border);
+    width: 100%;
     min-height: var(--control-height);
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow-control-small);

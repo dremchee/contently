@@ -2,7 +2,7 @@
   import { computed, useContently, onMounted } from '#imports';
   import CheckboxControl from '#runtime/public/ui/CheckboxControl.vue';
   import ControlsGroup from '#runtime/public/ui/ControlsGroup.vue';
-  import { KeyFieldData } from './types'
+  import type { KeyFieldData } from './types'
 
   const defaultProps: KeyFieldData = {
     autoGenerateKey: false

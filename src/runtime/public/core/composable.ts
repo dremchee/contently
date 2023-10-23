@@ -2,10 +2,16 @@ import { useBreakpoints } from "@vueuse/core";
 import { computed, useState, useLocalStorage } from "#imports";
 import { LangType } from "../../api/types";
 import { ContentlyApi } from "../api/api";
-import { translations, LangMessage } from "../../locales";
+import { translations } from "../../locales";
+import type { LangMessage } from "../../locales";
 import { withQuery } from "ufo";
 
-import { User, Collections, DocumentType, Settings } from "../../api/types";
+import type {
+  User,
+  Collections,
+  DocumentType,
+  Settings,
+} from "../../api/types";
 import { config } from "../../api/const";
 import { API_BASE_URL } from "./const";
 

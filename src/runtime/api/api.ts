@@ -1,6 +1,6 @@
 import { Database, Datastore } from "./db";
 import { config } from "./const";
-import { ModuleOptions } from "../../module";
+import type { ModuleOptions } from "../../module";
 
 export class ApiService {
   name: string;

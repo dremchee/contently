@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import { useContently, useRoute, useRouter, ref, watch, navigateTo, onMounted, useNuxtData } from '#imports';
-  import { DocumentType, Collections, Collection } from '#runtime/api/types'
+  import type { DocumentType, Collections, Collection } from '#runtime/api/types'
   import { RouterName } from '#runtime/public/core/const';
   import DashboardMainWrapper from '../../components/DashboardMainWrapper.vue';
   import DashboardHeader from '../../components/DashboardHeader.vue';
@@ -213,4 +213,3 @@
     box-shadow: var(--box-shadow-large);
   }
 </style>
-../../../core/const

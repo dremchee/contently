@@ -1,5 +1,5 @@
 import { fileService } from "./service";
-import { RouteOptions } from "../../types";
+import type { RouteOptions } from "../../types";
 import { buildResponse, buildResponseError } from "../../utils/helpers";
 import { existsSync } from "node:fs";
 import { writeFile, mkdir } from "node:fs/promises";

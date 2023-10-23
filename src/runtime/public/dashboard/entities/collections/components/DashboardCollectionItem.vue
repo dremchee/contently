@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import { Collections } from '../../../../../api/types';
+  import type { Collections } from '#runtime/api/types';
 
   defineProps<{
     item: Collections;

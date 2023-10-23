@@ -1,6 +1,5 @@
 <script lang="ts" setup>
-  import { useContently, ref, watch, onMounted } from '#imports'
-  import { useToast } from '#runtime/public/ui/toast'
+  import { useContently, ref, watch, onMounted, onUnmounted } from '#imports'
   import { LANGUAGES } from '#runtime/public/core/const'
   import ButtonControl from '../../../ui/ButtonControl.vue';
   import DashboardMainWrapper from '../../components/DashboardMainWrapper.vue';
@@ -9,10 +8,13 @@
   import InputField from '../../../ui/InputField.vue';
   import SelectControl from '../../../ui/SelectControl.vue';
   import { LangType } from '#runtime/api/types';
-  import { notice } from '#runtime/public/core/notification'
+  // import { useNotification } from '#runtime/public/core/notification'
+  import { useToast } from '#runtime/public/ui/toast';
+  // import { SSEMethodName } from '#runtime/server/hooks';
 
   const { api, t, settings, locale } = useContently()
-  const { toastShow } = useToast()
+  const { toastShow } = useToast();
+  // const { noticeEvent } = useNotification()
 
   const form = ref({ ...settings.value.meta })
   const isPending = ref(false)
@@ -32,17 +34,13 @@
   const updateSettings = async () => {
     isPending.value = true
     await api.updateMetaSettings(form.value)
+
+    toastShow({
+      type: 'success',
+      message: 'Update settings success'
+    })
     isPending.value = false
   }
-
-  notice.value?.addEventListener('notice', e => {
-    const data = JSON.parse(e.data)
-
-    toastShow(data, async () => {
-      await api.getSettings()
-      form.value = settings.value.meta
-    })
-  })
 </script>
 
 <template>
@@ -102,4 +100,3 @@
     gap: 16px;
   }
 </style>
-../../../core/const

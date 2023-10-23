@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import { DocumentType, Collections } from '../../../../../api/types';
+  import type { DocumentType, Collections } from '#runtime/api/types';
   import IconControl from '../../../../ui/IconControl.vue';
   import { DragHandle } from 'vue-slicksort'
 

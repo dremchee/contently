@@ -1,5 +1,6 @@
-import { File, DocumentType } from "../../types";
-import sharp, { ResizeOptions, FormatEnum } from "sharp";
+import type { File, DocumentType } from "../../types";
+import sharp from "sharp";
+import type { ResizeOptions, FormatEnum } from "sharp";
 import { lookup, extension } from "mime-types";
 import { resolve } from "node:path";
 import { unlinkSync, readFileSync } from "node:fs";

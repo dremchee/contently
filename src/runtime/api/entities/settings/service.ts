@@ -1,6 +1,6 @@
 import { userService } from "../users/service";
 import { config } from "../../const";
-import { DocumentType, LangType, Settings } from "../../types";
+import type { DocumentType, LangType, Settings } from "../../types";
 import { ApiService } from "../../api";
 import { arrayMoveIndex } from "../../utils/helpers";
 

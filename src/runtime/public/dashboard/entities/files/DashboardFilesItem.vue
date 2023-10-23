@@ -4,7 +4,7 @@
   import InputField from '#runtime/public/ui/InputField.vue';
   import TextareaField from '#runtime/public/ui/TextareaField.vue';
   import ControlsGroup from '#runtime/public/ui/ControlsGroup.vue';
-  import { DocumentType, File } from '#runtime/api/types';
+  import type { DocumentType, File } from '#runtime/api/types';
   import DashboardFileCard from './DashboardFileCard.vue';
   import { useDateFormat } from '@vueuse/core';
   const formatDate = (value: number) => useDateFormat(value, 'DD MMMM YYYY HH:mm:ss').value;

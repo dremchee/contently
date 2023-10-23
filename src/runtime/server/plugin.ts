@@ -1,4 +1,4 @@
-import { NitroAppPlugin } from "nitropack";
+import type { NitroAppPlugin } from "nitropack";
 import { buildResponseError, verifyToken } from "../api/utils/helpers";
 import { eventHandler, getCookie } from "h3";
 

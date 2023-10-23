@@ -1,8 +1,9 @@
 <script lang="ts" setup>
   import { ref, useContently } from '#imports';
   import { Editor } from '@tiptap/vue-3';
-  import { useEditor, EditorModelValue, commandAction } from './editor'
-  import { DocumentType, File } from '#runtime/api/types'
+  import { useEditor, commandAction } from './editor'
+  import type { EditorModelValue } from './editor'
+  import type { DocumentType, File } from '#runtime/api/types'
   import DashboardUploadFiles from '#runtime/public/dashboard/entities/files/DashboardUploadFiles.vue'
   import DropdownControl from '../DropdownControl.vue';
   import ModalWindow from '../modal/ModalWindow.vue';

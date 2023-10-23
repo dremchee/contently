@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-  import { useContently, ref, computed, watch, onMounted } from '#imports';
+  import { useContently, ref, computed, watch, onMounted, useCssModule } from '#imports';
   import { useToast } from '#runtime/public/ui/toast'
-  import { DocumentType, Files, File } from '#runtime/api/types'
+  import type { DocumentType, Files, File } from '#runtime/api/types'
   import DashboardMainWrapper from '../../components/DashboardMainWrapper.vue';
   import DashboardHeader from '../../components/DashboardHeader.vue';
   import ButtonControl from '#runtime/public/ui/ButtonControl.vue'

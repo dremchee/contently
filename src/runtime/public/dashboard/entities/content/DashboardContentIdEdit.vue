@@ -5,7 +5,7 @@
   import DashboardHeader from '../../components/DashboardHeader.vue';
   import DashboardPagePreloader from '#runtime/public/dashboard/components/DashboardPagePreloader.vue';
   import ButtonControl from '../../../ui/ButtonControl.vue';
-  import { Collection, Collections, DocumentType } from '../../../../api/types';
+  import type { Collection, Collections, DocumentType } from '#runtime/api/types';
   import DashboardContentForm from './components/DashboardContentForm.vue'
   import { RouterName } from '#runtime/public/core/const'
 
