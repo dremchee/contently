@@ -56,7 +56,6 @@
           const field = fieldList.find(f => f.type === e.type)
           form.value.content[e.key] = field?.defaultValue
         }
-
       })
     }
   })

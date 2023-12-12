@@ -1,5 +1,3 @@
-import type { NuxtPage } from "@nuxt/schema";
-
 import {
   defineNuxtModule,
   createResolver,
@@ -12,112 +10,26 @@ import {
   extendPages,
   extendRouteRules,
   installModule,
+  addComponent,
 } from "@nuxt/kit";
 
 import { writeFileSync } from "node:fs";
 import { ModuleOptionsEnum, LangType } from "./runtime/api/types";
-import { RouterName, PUBLIC_BASE_URL } from "./runtime/public/core/const";
 
 export const { resolve } = createResolver(import.meta.url);
+import { resolveModuleRoutes } from "./runtime/public/pages/pages";
+import defu from "defu";
+const moduleRoutes = resolveModuleRoutes(resolve);
 
-const routes: NuxtPage[] = [
-  {
-    name: RouterName.LOGIN,
-    path: `/${PUBLIC_BASE_URL}/login`,
-    file: resolve("./runtime/public/pages/LoginPage.vue"),
-  },
-  {
-    name: RouterName.INDEX,
-    path: `/${PUBLIC_BASE_URL}`,
-    file: resolve("./runtime/public/pages/IndexPage.vue"),
-    redirect: {
-      name: RouterName.CONTENT,
-    },
-    children: [
-      {
-        name: RouterName.CONTENT,
-        path: "content",
-        file: resolve("./runtime/public/pages/content/ContentPage.vue"),
-        children: [
-          {
-            name: RouterName.CONTENT_ID,
-            path: ":id",
-            file: resolve("./runtime/public/pages/content/ContentPageId.vue"),
-            children: [
-              {
-                name: RouterName.CONTENT_ITEMS,
-                path: "",
-                file: resolve(
-                  "./runtime/public/pages/content/ContentPageIdItems.vue"
-                ),
-              },
-              {
-                name: RouterName.CONTENT_ADD,
-                path: "add",
-                file: resolve(
-                  "./runtime/public/pages/content/ContentPageIdAdd.vue"
-                ),
-              },
-              {
-                name: RouterName.CONTENT_EDIT,
-                path: ":resource",
-                file: resolve(
-                  "./runtime/public/pages/content/ContentPageIdEdit.vue"
-                ),
-              },
-            ],
-          },
-        ],
-      },
-      {
-        name: RouterName.FILES,
-        path: "files",
-        file: resolve("./runtime/public/pages/files/FilesPage.vue"),
-      },
-      {
-        name: RouterName.SETTINGS,
-        path: "settings",
-        file: resolve("./runtime/public/pages/settings/SettingsPage.vue"),
-        redirect: {
-          name: RouterName.COLLECTIONS,
-        },
-        children: [
-          {
-            name: RouterName.COLLECTIONS,
-            path: "collections",
-            file: resolve(
-              "./runtime/public/pages/collections/CollectionsPage.vue"
-            ),
-            redirect: {
-              name: RouterName.COLLECTIONS_ITEMS,
-            },
-            children: [
-              {
-                name: RouterName.COLLECTIONS_ITEMS,
-                path: "",
-                file: resolve(
-                  "./runtime/public/pages/collections/CollectionsPageItems.vue"
-                ),
-              },
-              {
-                name: RouterName.COLLECTIONS_ID,
-                path: ":id",
-                file: resolve(
-                  "./runtime/public/pages/collections/CollectionsPageId.vue"
-                ),
-              },
-            ],
-          },
-          {
-            name: RouterName.PROJECT,
-            path: "project",
-            file: resolve("./runtime/public/pages/project/ProjectPage.vue"),
-          },
-        ],
-      },
-    ],
-  },
-];
+type ModuleExtensions = {
+  title: string;
+  route: string;
+  icon: string;
+  component: {
+    name: string;
+    filePath: string;
+  };
+};
 
 export interface ModuleOptions {
   databasePath: string;
@@ -127,6 +39,7 @@ export interface ModuleOptions {
   userPassword: string;
   managerUrl?: string;
   defaultLocale?: string;
+  extensions?: ModuleExtensions[];
 }
 
 export default defineNuxtModule<ModuleOptions>({
@@ -142,6 +55,7 @@ export default defineNuxtModule<ModuleOptions>({
     userPassword: "",
     managerUrl: "admin",
     defaultLocale: LangType.EN,
+    extensions: [],
   },
   async setup(moduleOptions, nuxt) {
     await installModule("@vueuse/nuxt");
@@ -155,8 +69,8 @@ export default defineNuxtModule<ModuleOptions>({
     addLayout(
       {
         src: resolve("./runtime/public/layout/DashboardLayout.vue"),
-        filename: "AdminDashboardLayout.vue",
-        write: true,
+        // filename: "AdminDashboardLayout.vue",
+        // write: true,
       },
       "dashboard"
     );
@@ -183,8 +97,34 @@ export default defineNuxtModule<ModuleOptions>({
       global: true,
     });
 
+    if (moduleOptions.extensions) {
+      // moduleOptions.extensions.forEach(({ component }) => {
+      //   addComponent({
+      //     name: component.name,
+      //     filePath: resolve(nuxt.options.srcDir, component.filePath),
+      //   });
+      // });
+
+      nuxt.options.runtimeConfig.public.contently = defu(
+        nuxt.options.runtimeConfig.public.contently,
+        {
+          extensions: moduleOptions.extensions,
+        }
+      );
+    }
+
     extendPages((pages) => {
-      routes.forEach((route) => {
+      moduleOptions.extensions?.forEach((ext) => {
+        const data = {
+          name: `admin-extension-${ext.route}`,
+          path: `/admin/${ext.route}`,
+          file: resolve(nuxt.options.srcDir, ext.component.filePath),
+        };
+
+        moduleRoutes[1].children?.push(data);
+      });
+
+      moduleRoutes.forEach((route) => {
         pages.push(route);
       });
     });

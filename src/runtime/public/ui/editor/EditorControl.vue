@@ -1,6 +1,7 @@
 <script lang="ts" setup>
   import { computed, ref, onMounted, onUnmounted, nextTick } from '#imports';
-  import { useEditor, EditorModelValue, useHeaderObserver } from './editor'
+  import { useEditor, useHeaderObserver } from './editor'
+  import type { EditorModelValue } from './editor'
   import { useIntersectionObserver } from '@vueuse/core'
   import EditorControlTools from './EditorControlTools.vue';
 

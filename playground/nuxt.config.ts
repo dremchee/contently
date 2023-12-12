@@ -9,6 +9,17 @@ export default defineNuxtConfig({
     uploadsPath: import.meta.env.UPLOADS_FOLDER,
     userLogin: import.meta.env.USER_LOGIN,
     userPassword: import.meta.env.USER_PASSWORD,
+    extensions: [
+      {
+        title: "Example",
+        route: "example",
+        icon: "settings",
+        component: {
+          name: "AdminExtension",
+          filePath: "./components/AdminExtension.vue",
+        },
+      },
+    ],
   },
   devtools: {
     enabled: true,

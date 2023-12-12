@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import { ref, computed, useContently } from '#imports';
+  import { ref, computed, useContently, useRuntimeConfig } from '#imports';
   import { useDraggable } from '@vueuse/core';
   import IconControl from '../../ui/IconControl.vue';
   import TooltipControl from '#runtime/public/ui/TooltipControl.vue';
@@ -21,9 +21,23 @@
     },
   });
 
+  const config = useRuntimeConfig()
+
+  const extensionRouter = config.public.contently.extensions.map((e: any) => {
+    const { name, icon, title, route } = e
+    return {
+      name,
+      icon,
+      title,
+      route: {
+        name: `admin-extension-${route}`
+      }
+    }
+  })
+
+
   const items = computed(() => [
     {
-      id: 'content',
       name: 'main',
       icon: 'home',
       title: t('main'),
@@ -32,7 +46,6 @@
       },
     },
     {
-      id: 'files',
       name: 'files',
       title: t('files'),
       icon: 'folder',
@@ -42,7 +55,6 @@
       children: [],
     },
     {
-      id: 'settings',
       name: 'settings',
       title: t('settings'),
       icon: 'settings',
@@ -50,6 +62,7 @@
         name: RouterName.SETTINGS,
       },
     },
+    ...extensionRouter
   ]);
 </script>
 
@@ -79,7 +92,7 @@
 
       <NuxtLink
         v-for="item in items"
-        :key="item.id"
+        :key="item.name"
         v-slot="{ navigate, href, isActive }"
         :to="item.route"
         custom

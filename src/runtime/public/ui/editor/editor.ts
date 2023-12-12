@@ -1,11 +1,11 @@
-import { ShallowRef, shallowRef } from "vue";
+import { type ShallowRef, shallowRef } from "vue";
 import { useResizeObserver } from "@vueuse/core";
-import { Editor, EditorOptions, JSONContent } from "@tiptap/core";
+import type { Editor, EditorOptions, JSONContent } from "@tiptap/core";
 import { useEditor as useTiptapEditor, EditorContent } from "@tiptap/vue-3";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
 import Focus from "@tiptap/extension-focus";
-import { Level } from "@tiptap/extension-heading";
+import type { Level } from "@tiptap/extension-heading";
 import HorizontalRule from "@tiptap/extension-horizontal-rule";
 import Image from "@tiptap/extension-image";
 import ImageAdvanced from "./extensions/image";
